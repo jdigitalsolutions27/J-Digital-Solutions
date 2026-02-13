@@ -34,12 +34,16 @@ export function Stagger({
     }
   };
 
+  // A Stagger container is often very tall (multiple cards). On small screens,
+  // requiring 25% visibility can mean it never triggers. Use a smaller threshold.
+  const viewport = { ...viewportDefaults, amount: 0.12 } as const;
+
   return (
     <motion.div
       className={cn("will-change-transform", className)}
       initial="hidden"
       whileInView="visible"
-      viewport={viewportDefaults}
+      viewport={viewport}
       variants={variants}
     >
       {children}
