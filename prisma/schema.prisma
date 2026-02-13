@@ -1,0 +1,205 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProjectStatus {
+  DEMO
+  CLIENT
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CLOSED
+  LOST
+}
+
+enum LeadType {
+  CONSULTATION
+  AUDIT
+}
+
+model User {
+  id           String       @id @default(cuid())
+  name         String?
+  email        String       @unique
+  passwordHash String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  mediaAssets  MediaAsset[]
+}
+
+model SiteSettings {
+  id                   Int      @id @default(1)
+  brandName            String   @default("J-Digital Solutions")
+  heroHeadline         String
+  heroSubheadline      String
+  primaryCtaLabel      String   @default("Book Free Consultation")
+  primaryCtaLink       String   @default("/contact?package=startup")
+  secondaryCtaLabel    String   @default("View Portfolio")
+  secondaryCtaLink     String   @default("/portfolio")
+  phone                String?
+  email                String?
+  officeAddress        String?
+  whatsappLink         String?
+  messengerLink        String?
+  messageButtonLabel   String   @default("Message Us")
+  messageButtonLink    String?
+  calendarBookingLink  String?
+  facebookUrl          String?
+  instagramUrl         String?
+  linkedinUrl          String?
+  seoDefaultTitle      String
+  seoDefaultDescription String
+  highlightPackageSlug String   @default("startup")
+  testimonialsEnabled  Boolean  @default(false)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model Service {
+  id               String   @id @default(cuid())
+  title            String
+  slug             String   @unique
+  shortDescription String
+  description      String
+  iconKey          String?
+  position         Int      @default(0)
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model PortfolioProject {
+  id               String       @id @default(cuid())
+  title            String
+  slug             String       @unique
+  industry         String
+  shortSummary     String
+  tags             String[]
+  coverImage       String
+  servicesProvided String[]
+  liveLink         String?
+  status           ProjectStatus @default(DEMO)
+  position         Int          @default(0)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  images           ProjectImage[]
+}
+
+model ProjectCategory {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  position  Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProjectImage {
+  id        String   @id @default(cuid())
+  projectId String
+  url       String
+  alt       String?
+  position  Int      @default(0)
+  createdAt DateTime @default(now())
+
+  project PortfolioProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model ProcessStep {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  deliverables String[]
+  timeline    String
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PricingPackage {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  price       Int
+  delivery    String
+  includes    String[]
+  freebies    String[]
+  note        String?
+  isPopular   Boolean  @default(false)
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model FAQ {
+  id          String   @id @default(cuid())
+  question    String
+  answer      String
+  position    Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  company     String
+  quote       String
+  avatarUrl   String?
+  position    Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Lead {
+  id                     String     @id @default(cuid())
+  fullName               String
+  email                  String
+  mobileNumber           String
+  businessName           String
+  industry               String
+  packageInterest        String
+  budgetRange            String
+  preferredContactMethod String
+  preferredContactValue  String?
+  messageGoals           String
+  leadType               LeadType   @default(CONSULTATION)
+  websiteOrFacebookLink  String?
+  status                 LeadStatus @default(NEW)
+  createdAt              DateTime   @default(now())
+  updatedAt              DateTime   @updatedAt
+
+  @@index([leadType])
+  @@index([createdAt])
+  @@index([status])
+}
+
+model MediaAsset {
+  id           String   @id @default(cuid())
+  fileName     String
+  bucket       String
+  path         String
+  url          String
+  mimeType     String?
+  size         Int?
+  uploadedById String?
+  createdAt    DateTime @default(now())
+
+  uploadedBy User? @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+}
