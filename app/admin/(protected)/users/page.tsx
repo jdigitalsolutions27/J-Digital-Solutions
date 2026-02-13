@@ -1,14 +1,18 @@
 import { format } from "date-fns";
 
+import { ActionButton } from "@/components/admin/action-button";
 import { ActionForm } from "@/components/admin/action-form";
 import { AdminPageHeader } from "@/components/admin/page-header";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { changePasswordAction, createAdminUserAction } from "@/lib/actions/admin";
+import { deleteAdminUserAction, changePasswordAction, createAdminUserAction } from "@/lib/actions/admin";
+import { getServerAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 
 export default async function AdminUsersPage() {
+  const session = await getServerAuthSession();
+  const currentUserId = session?.user?.id || null;
   const users = await db.user.findMany({ orderBy: { createdAt: "asc" } });
 
   return (
@@ -39,6 +43,7 @@ export default async function AdminUsersPage() {
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Created</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -47,6 +52,21 @@ export default async function AdminUsersPage() {
                 <TableCell>{user.name || "Admin"}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{format(user.createdAt, "MMM d, yyyy")}</TableCell>
+                <TableCell className="text-right">
+                  <div className="flex justify-end gap-2">
+                    {currentUserId !== user.id ? (
+                      <ActionButton
+                        action={deleteAdminUserAction}
+                        label="Delete"
+                        pendingLabel="Deleting..."
+                        variant="destructive"
+                        payload={{ id: user.id }}
+                        confirmMessage={`Delete admin ${user.email}? This cannot be undone.`}
+                      />
+                    ) : null}
+                  </div>
+                  {currentUserId === user.id ? <p className="mt-2 text-xs text-slate-400">This is your current account.</p> : null}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

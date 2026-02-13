@@ -29,8 +29,13 @@ export default async function AdminProcessPage({
       }
     : {};
 
-  const [items, total] = await Promise.all([
-    db.processStep.findMany({ where, orderBy: [{ position: "asc" }, { createdAt: "desc" }], skip: (page - 1) * PAGE_SIZE, take: PAGE_SIZE }),
+  const [items, total] = await db.$transaction([
+    db.processStep.findMany({
+      where,
+      orderBy: [{ position: "asc" }, { createdAt: "desc" }],
+      skip: (page - 1) * PAGE_SIZE,
+      take: PAGE_SIZE
+    }),
     db.processStep.count({ where })
   ]);
 

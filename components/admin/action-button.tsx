@@ -15,6 +15,7 @@ export function ActionButton({
   payload,
   label,
   pendingLabel,
+  confirmMessage,
   variant = "outline",
   size = "sm"
 }: {
@@ -22,6 +23,7 @@ export function ActionButton({
   payload: Record<string, string>;
   label: string;
   pendingLabel?: string;
+  confirmMessage?: string;
   variant?: "default" | "outline" | "ghost" | "destructive";
   size?: "default" | "sm" | "lg" | "icon";
 }) {
@@ -34,6 +36,7 @@ export function ActionButton({
       size={size}
       disabled={pending}
       onClick={() => {
+        if (confirmMessage && !window.confirm(confirmMessage)) return;
         const formData = new FormData();
         Object.entries(payload).forEach(([key, value]) => formData.append(key, value));
 

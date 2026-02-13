@@ -23,10 +23,9 @@ export async function generateMetadata() {
 }
 
 export default async function ContactPage() {
-  const [settings, packages] = await Promise.all([
-    getSiteSettings(),
-    db.pricingPackage.findMany({ orderBy: { position: "asc" } }).catch(() => [])
-  ]);
+  // Avoid concurrent DB calls (can overwhelm Supabase session pooler under load).
+  const settings = await getSiteSettings();
+  const packages = await db.pricingPackage.findMany({ orderBy: { position: "asc" } }).catch(() => []);
 
   const packageOptions =
     packages.length > 0

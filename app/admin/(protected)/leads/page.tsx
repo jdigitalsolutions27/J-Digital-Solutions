@@ -34,7 +34,7 @@ export default async function AdminLeadsPage({
     ...(status ? { status: status as "NEW" | "CONTACTED" | "QUALIFIED" | "CLOSED" | "LOST" } : {})
   };
 
-  const [items, total] = await Promise.all([
+  const [items, total] = await db.$transaction([
     db.lead.findMany({ where, orderBy: { createdAt: "desc" }, skip: (page - 1) * PAGE_SIZE, take: PAGE_SIZE }),
     db.lead.count({ where })
   ]);

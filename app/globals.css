@@ -134,6 +134,8 @@
     scroll-behavior: smooth;
     overflow-x: clip;
     text-rendering: optimizeLegibility;
+    /* Ensure native form controls (selects, inputs) render correctly on dark UI across mobile browsers. */
+    color-scheme: dark;
   }
 
   * {
@@ -147,6 +149,12 @@
     min-height: 100vh;
     overflow-x: clip;
     line-height: 1.5;
+  }
+
+  input,
+  select,
+  textarea {
+    color-scheme: dark;
   }
 
   h1,

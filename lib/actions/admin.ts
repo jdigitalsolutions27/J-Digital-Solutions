@@ -658,3 +658,26 @@ export async function createAdminUserAction(formData: FormData) {
   revalidatePath("/admin/users");
   return { success: "Admin user created." };
 }
+
+export async function deleteAdminUserAction(formData: FormData) {
+  const currentUser = await requireAdmin();
+
+  const id = String(formData.get("id") || "").trim();
+  if (!id) return { error: "Missing user ID." };
+
+  if (id === currentUser.id) {
+    return { error: "You cannot delete your own admin account." };
+  }
+
+  const totalUsers = await db.user.count();
+  if (totalUsers <= 1) {
+    return { error: "You cannot delete the last remaining admin user." };
+  }
+
+  const existing = await db.user.findUnique({ where: { id } });
+  if (!existing) return { error: "User not found." };
+
+  await db.user.delete({ where: { id } });
+  revalidatePath("/admin/users");
+  return { success: "Admin user deleted." };
+}

@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { db } from "@/lib/db";
 
 export default async function AdminDashboardPage() {
-  const [services, projects, leads, pricing, latestLeads] = await Promise.all([
+  const [services, projects, leads, pricing, latestLeads] = await db.$transaction([
     db.service.count(),
     db.portfolioProject.count(),
     db.lead.count(),

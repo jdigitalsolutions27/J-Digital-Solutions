@@ -29,7 +29,7 @@ export default async function AdminServicesPage({
       }
     : {};
 
-  const [items, total] = await Promise.all([
+  const [items, total] = await db.$transaction([
     db.service.findMany({
       where,
       orderBy: [{ position: "asc" }, { createdAt: "desc" }],

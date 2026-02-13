@@ -30,10 +30,15 @@ export default async function AdminTestimonialsPage({
       }
     : {};
 
-  const [items, total, settings] = await Promise.all([
-    db.testimonial.findMany({ where, orderBy: [{ position: "asc" }, { createdAt: "desc" }], skip: (page - 1) * PAGE_SIZE, take: PAGE_SIZE }),
-    db.testimonial.count({ where }),
-    getSiteSettings()
+  const settings = await getSiteSettings();
+  const [items, total] = await db.$transaction([
+    db.testimonial.findMany({
+      where,
+      orderBy: [{ position: "asc" }, { createdAt: "desc" }],
+      skip: (page - 1) * PAGE_SIZE,
+      take: PAGE_SIZE
+    }),
+    db.testimonial.count({ where })
   ]);
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));

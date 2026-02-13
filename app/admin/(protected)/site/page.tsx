@@ -9,10 +9,9 @@ import { db } from "@/lib/db";
 import { getSiteSettings } from "@/lib/site-data";
 
 export default async function AdminSiteSettingsPage() {
-  const [settings, pricing] = await Promise.all([
-    getSiteSettings(),
-    db.pricingPackage.findMany({ orderBy: { position: "asc" } })
-  ]);
+  // Avoid concurrent DB calls (Supabase session pooler can be sensitive to bursts).
+  const settings = await getSiteSettings();
+  const pricing = await db.pricingPackage.findMany({ orderBy: { position: "asc" } });
 
   return (
     <div>

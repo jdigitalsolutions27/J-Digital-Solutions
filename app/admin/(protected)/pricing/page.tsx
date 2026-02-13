@@ -30,8 +30,13 @@ export default async function AdminPricingPage({
       }
     : {};
 
-  const [items, total] = await Promise.all([
-    db.pricingPackage.findMany({ where, orderBy: [{ position: "asc" }, { createdAt: "desc" }], skip: (page - 1) * PAGE_SIZE, take: PAGE_SIZE }),
+  const [items, total] = await db.$transaction([
+    db.pricingPackage.findMany({
+      where,
+      orderBy: [{ position: "asc" }, { createdAt: "desc" }],
+      skip: (page - 1) * PAGE_SIZE,
+      take: PAGE_SIZE
+    }),
     db.pricingPackage.count({ where })
   ]);
 

@@ -39,28 +39,53 @@ export default async function AdminPortfolioPage({
       }
     : {};
 
-  const [items, total, mediaItems, categories, editingProject] = await Promise.all([
-    db.portfolioProject.findMany({
-      where,
-      orderBy: [{ position: "asc" }, { createdAt: "desc" }],
-      skip: (page - 1) * PAGE_SIZE,
-      take: PAGE_SIZE
-    }),
-    db.portfolioProject.count({ where }),
-    db.mediaAsset.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 60,
-      select: {
-        id: true,
-        fileName: true,
-        url: true
-      }
-    }),
-    db.projectCategory.findMany({
-      orderBy: [{ position: "asc" }, { createdAt: "asc" }]
-    }),
-    editId ? db.portfolioProject.findUnique({ where: { id: editId } }) : Promise.resolve(null)
-  ]);
+  // Use a single transaction to avoid bursting Supabase session pooler connections during pagination/back navigation.
+  const [items, total, mediaItems, categories, editingProject] = editId
+    ? await db.$transaction([
+        db.portfolioProject.findMany({
+          where,
+          orderBy: [{ position: "asc" }, { createdAt: "desc" }],
+          skip: (page - 1) * PAGE_SIZE,
+          take: PAGE_SIZE
+        }),
+        db.portfolioProject.count({ where }),
+        db.mediaAsset.findMany({
+          orderBy: { createdAt: "desc" },
+          take: 60,
+          select: {
+            id: true,
+            fileName: true,
+            url: true
+          }
+        }),
+        db.projectCategory.findMany({
+          orderBy: [{ position: "asc" }, { createdAt: "asc" }]
+        }),
+        db.portfolioProject.findUnique({ where: { id: editId } })
+      ])
+    : await db.$transaction([
+        db.portfolioProject.findMany({
+          where,
+          orderBy: [{ position: "asc" }, { createdAt: "desc" }],
+          skip: (page - 1) * PAGE_SIZE,
+          take: PAGE_SIZE
+        }),
+        db.portfolioProject.count({ where }),
+        db.mediaAsset.findMany({
+          orderBy: { createdAt: "desc" },
+          take: 60,
+          select: {
+            id: true,
+            fileName: true,
+            url: true
+          }
+        }),
+        db.projectCategory.findMany({
+          orderBy: [{ position: "asc" }, { createdAt: "asc" }]
+        }),
+        // Keep return shape consistent with the edit case.
+        db.portfolioProject.findUnique({ where: { id: "__none__" } })
+      ]);
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const activeCategoryNames = categories.filter((item) => item.isActive).map((item) => item.name);
