@@ -11,6 +11,7 @@
         "postinstall": "prisma generate",
         "db:push": "prisma db push",
         "db:migrate": "prisma migrate dev",
+        "db:rls": "prisma db execute --file scripts/enable-rls.sql --schema prisma/schema.prisma",
         "db:seed": "dotenv -e .env -- tsx prisma/seed.ts",
         "email:test": "dotenv -e .env.local -- tsx scripts/test-contact-email.ts",
         "db:start": "powershell -ExecutionPolicy Bypass -File scripts\\\\db-start.ps1",

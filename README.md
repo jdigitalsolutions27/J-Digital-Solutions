@@ -93,6 +93,15 @@ Generate Prisma client:
 npx prisma generate
 ```
 
+### Supabase Security Advisor: RLS Warnings
+If Supabase shows `RLS Disabled in Public` for your tables, run:
+```bash
+npm run db:rls
+```
+
+This executes `scripts/enable-rls.sql` and enables RLS on all app tables.
+Your app continues to work because Prisma runs server-side and media uploads use service-role access.
+
 ## 4) Seed Default Data
 ```bash
 npm run db:seed
