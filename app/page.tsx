@@ -120,6 +120,33 @@ const valueMetrics = [
   }
 ];
 
+const defaultTestimonials = [
+  {
+    id: "home-testimonial-1",
+    name: "Engr. Paolo Dela Cruz",
+    role: "General Manager",
+    company: "PrimeSteel Structures",
+    quote:
+      "Before launching our new website, most inquiries were random and hard to qualify. After J-Digital rebuilt our site, leads became clearer, more serious, and easier for our team to close."
+  },
+  {
+    id: "home-testimonial-2",
+    name: "Dr. Andrea Villanueva",
+    role: "Clinic Owner",
+    company: "VitalCore Health Clinic",
+    quote:
+      "The website now reflects the professionalism we want patients to feel before they even message us. Mobile inquiries improved, and patients now ask more specific service questions."
+  },
+  {
+    id: "home-testimonial-3",
+    name: "Mikaela Santos",
+    role: "Founder",
+    company: "LuxeCart Online",
+    quote:
+      "J-Digital gave us a premium online presence that finally matches our brand. The structure is clean, fast, and built for conversion. It feels like an actual growth asset, not just a website."
+  }
+];
+
 const defaultFaqItems = [
   {
     id: "faq-launch",
@@ -167,6 +194,17 @@ export default async function HomePage() {
 
   const hasFeature = (pkg: { includes: string[] } | undefined, keywords: string[]) =>
     pkg?.includes.some((item) => keywords.some((keyword) => item.toLowerCase().includes(keyword))) ?? false;
+
+  const testimonialItems =
+    data.testimonials.length > 0
+      ? data.testimonials.map((item) => ({
+          id: item.id,
+          name: item.name,
+          role: item.role,
+          company: item.company,
+          quote: item.quote
+        }))
+      : defaultTestimonials;
 
   return (
     <MarketingShell>
@@ -384,6 +422,35 @@ export default async function HomePage() {
                   <p className="text-sm text-slate-300">{metric.text}</p>
                 </CardContent>
               </Card>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </SectionWrapper>
+
+      <SectionWrapper variant="raised" glow="soft" id="testimonials" withTopDivider withBottomDivider>
+        <Reveal>
+          <SectionHeading
+            eyebrow="Client Testimonials"
+            title="What business owners say after launch"
+            description="Real feedback focused on trust, lead quality, and conversion outcomes."
+          />
+        </Reveal>
+        <Stagger className="mt-8 grid gap-5 md:grid-cols-3">
+          {testimonialItems.map((item) => (
+            <StaggerItem key={item.id}>
+              <TiltCard className="h-full">
+                <Card className="h-full border-white/15 bg-white/[0.04]">
+                  <CardContent className="space-y-4 p-6">
+                    <p className="text-sm leading-relaxed text-slate-200">&ldquo;{item.quote}&rdquo;</p>
+                    <div>
+                      <p className="font-semibold text-white">{item.name}</p>
+                      <p className="text-xs text-slate-300">
+                        {item.role}, {item.company}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TiltCard>
             </StaggerItem>
           ))}
         </Stagger>

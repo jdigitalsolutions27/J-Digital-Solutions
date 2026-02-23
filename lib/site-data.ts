@@ -28,7 +28,7 @@ const fallbackSiteSettings: SiteSettings = {
   seoDefaultDescription:
     "J-Digital Solutions creates conversion-focused websites, landing pages, and growth systems for Philippine SMEs and local brands.",
   highlightPackageSlug: "startup",
-  testimonialsEnabled: false,
+  testimonialsEnabled: true,
   createdAt: new Date(),
   updatedAt: new Date()
 };

@@ -30,7 +30,8 @@ async function main() {
       phone: officialPhone,
       facebookUrl: officialFacebook,
       messageButtonLink: officialMessenger,
-      messengerLink: officialMessenger
+      messengerLink: officialMessenger,
+      testimonialsEnabled: true
     },
     create: {
       id: 1,
@@ -44,7 +45,8 @@ async function main() {
       phone: officialPhone,
       facebookUrl: officialFacebook,
       messageButtonLink: officialMessenger,
-      messengerLink: officialMessenger
+      messengerLink: officialMessenger,
+      testimonialsEnabled: true
     }
   });
 
@@ -371,25 +373,52 @@ async function main() {
 
   const testimonials = [
     {
-      name: "Mark De Leon",
-      role: "Owner",
-      company: "MetroBuild Prime",
-      quote: "J-Digital helped us present our company professionally and increased inquiry quality in the first month.",
+      name: "Engr. Paolo Dela Cruz",
+      role: "General Manager",
+      company: "PrimeSteel Structures",
+      quote:
+        "Before the redesign, most inquiries were generic and difficult to qualify. After launch, we started receiving clearer project requests and better-fit clients from the website.",
       position: 1
     },
     {
-      name: "Alyssa Tan",
-      role: "Founder",
-      company: "Luna Cart Essentials",
-      quote: "Our new website finally reflects our brand. The structure is clear, fast, and made for conversion.",
+      name: "Dr. Andrea Villanueva",
+      role: "Clinic Owner",
+      company: "VitalCore Health Clinic",
+      quote:
+        "J-Digital translated our clinic services into a clean, trustworthy website. Patients now understand our offerings faster and contact us with better context.",
       position: 2
     },
     {
-      name: "Dr. Kevin Cruz",
-      role: "Clinic Director",
-      company: "Carewell Medical Clinic",
-      quote: "The team understood local patient behavior and built a smooth inquiry flow for mobile users.",
+      name: "Mikaela Santos",
+      role: "Founder",
+      company: "LuxeCart Online",
+      quote:
+        "The final site feels premium and conversion-ready. Product pages are easier to browse on mobile, and the overall brand perception improved significantly.",
       position: 3
+    },
+    {
+      name: "Rachel Lim",
+      role: "Managing Partner",
+      company: "Elevate Consulting Group",
+      quote:
+        "What stood out was the process. Every phase had structure, timelines, and clear deliverables. The result is a site that positions us more professionally to enterprise clients.",
+      position: 4
+    },
+    {
+      name: "Anthony Reyes",
+      role: "Operations Head",
+      company: "TitanFrame Construction",
+      quote:
+        "We used to rely mostly on Facebook messages. With the new website funnel, inquiries are now organized, and our sales team spends less time filtering low-intent leads.",
+      position: 5
+    },
+    {
+      name: "Camille Navarro",
+      role: "Director",
+      company: "WellSpring Family Care",
+      quote:
+        "Our previous site looked outdated and hard to navigate. J-Digital built a faster, cleaner experience that improved credibility and made patient inquiries more consistent.",
+      position: 6
     }
   ];
 
