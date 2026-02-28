@@ -86,11 +86,11 @@ export function PricingFitQuiz({ packages }: { packages: PackageOption[] }) {
       </div>
 
       {result ? (
-        <div className="mt-6 rounded-2xl border border-cyan-300/35 bg-cyan-400/10 p-5">
+      <div className="mt-6 rounded-2xl border border-cyan-300/35 bg-cyan-400/10 p-5">
           <p className="text-sm text-slate-100">Recommended package:</p>
           <p className="mt-1 text-xl font-bold text-white">{result.name}</p>
           <Button asChild className="mt-4">
-            <Link href={`/contact?package=${result.slug}`}>Continue with {result.name}</Link>
+            <Link href={`/contact?package=${encodeURIComponent(result.name)}`}>Continue with {result.name}</Link>
           </Button>
         </div>
       ) : (

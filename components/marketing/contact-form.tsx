@@ -27,8 +27,13 @@ export function ContactForm({ packageOptions }: { packageOptions: string[] }) {
   const defaultPackage = useMemo(() => {
     if (!packageFromQuery) return packageOptions[0] || "Startup";
     const match = packageOptions.find((pkg) => pkg.toLowerCase() === packageFromQuery.toLowerCase());
-    return match || packageOptions[0] || "Startup";
+    return match || packageFromQuery || packageOptions[0] || "Startup";
   }, [packageFromQuery, packageOptions]);
+
+  const visiblePackageOptions = useMemo(() => {
+    const items = [defaultPackage, ...packageOptions].filter(Boolean);
+    return Array.from(new Set(items));
+  }, [defaultPackage, packageOptions]);
 
   const {
     register,
@@ -187,7 +192,7 @@ export function ContactForm({ packageOptions }: { packageOptions: string[] }) {
         <div className="space-y-2">
           <Label htmlFor="packageInterest">Package Interest</Label>
           <Select id="packageInterest" {...register("packageInterest")}>
-            {packageOptions.map((item) => (
+            {visiblePackageOptions.map((item) => (
               <option key={item} value={item}>
                 {item}
               </option>

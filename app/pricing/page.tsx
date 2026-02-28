@@ -1,9 +1,9 @@
 import { GlowBandSeparator } from "@/components/layout/dividers/GlowBandSeparator";
+import { PricingMarketSwitcher } from "@/components/marketing/pricing-market-switcher";
 import { SectionWrapper } from "@/components/layout/SectionWrapper";
 import { PremiumFaqAccordion } from "@/components/marketing/premium-faq-accordion";
 import { PricingPackageStack, type PricingPackageCard } from "@/components/marketing/pricing-package-stack";
 import { MarketingShell } from "@/components/marketing/shell";
-import { PricingFitQuiz } from "@/components/marketing/pricing-fit-quiz";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { TrackedButtonLink } from "@/components/marketing/tracked-button-link";
 import { Reveal } from "@/components/motion/Reveal";
@@ -22,10 +22,11 @@ export async function generateMetadata() {
 
 const pricingPackages: PricingPackageCard[] = [
   {
-    name: "STARTER",
+    name: "Starter",
     slug: "starter",
     price: 3999,
     delivery: "3-5 Days",
+    idealFor: "Best for businesses that need a strong entry-level web presence with a clear first step online.",
     includes: [
       "1-Page Landing Page",
       "Mobile Responsive Design",
@@ -37,10 +38,11 @@ const pricingPackages: PricingPackageCard[] = [
     complimentary: ["Free Logo (Basic Branding)", "Free Consultation"]
   },
   {
-    name: "BASIC",
+    name: "Basic",
     slug: "basic",
     price: 5999,
     delivery: "3-7 Days",
+    idealFor: "Best for growing local businesses that need a multi-page website with stronger trust signals.",
     includes: [
       "Up to 3 Pages",
       "Mobile Responsive Design",
@@ -52,10 +54,11 @@ const pricingPackages: PricingPackageCard[] = [
     complimentary: ["1-Year Free Hosting & Domain", "Free Logo (Branding)", "Free Consultation"]
   },
   {
-    name: "STARTUP",
+    name: "Startup",
     slug: "startup",
     price: 14999,
     delivery: "7-10 Days",
+    idealFor: "Best for serious businesses ready to invest in a premium, lead-focused website system.",
     includes: [
       "Up to 5-7 Pages",
       "Mobile Responsive Design",
@@ -71,10 +74,11 @@ const pricingPackages: PricingPackageCard[] = [
     isPopular: true
   },
   {
-    name: "PROFESSIONAL",
+    name: "Professional",
     slug: "professional",
     price: 26999,
     delivery: "7-15 Days",
+    idealFor: "Best for established companies that need a custom build with operational workflows and admin access.",
     includes: [
       "Up to 8-10 Pages",
       "Mobile Responsive Design",
@@ -88,10 +92,11 @@ const pricingPackages: PricingPackageCard[] = [
     complimentary: ["1-Year Free Hosting & Domain", "Free Logo (Branding)", "Free Consultation"]
   },
   {
-    name: "BUSINESS / E-COMMERCE",
+    name: "Business / E-Commerce",
     slug: "business-ecommerce",
     price: 46999,
     delivery: "7-20 Days",
+    idealFor: "Best for businesses that need online selling, advanced systems, or a more complex web platform.",
     includes: [
       "10+ Pages",
       "Mobile Responsive Design",
@@ -105,6 +110,99 @@ const pricingPackages: PricingPackageCard[] = [
       "30 Days Priority Support"
     ],
     complimentary: ["1-Year Free Hosting & Domain", "Free Logo (Branding)", "Free Consultation"]
+  }
+];
+
+const internationalPricingPackages: PricingPackageCard[] = [
+  {
+    name: "Starter Website",
+    slug: "starter",
+    price: 199,
+    priceLabel: "$199",
+    delivery: "3-5 Days",
+    idealFor: "Best for freelancers and small startups that need a clean, professional website fast.",
+    includes: [
+      "3-5 Pages Professional Website",
+      "Mobile Responsive",
+      "Contact Form",
+      "Basic On-Page SEO",
+      "Live Deployment"
+    ],
+    complimentary: ["Free Logo", "Free Consultation", "7 Days Support"]
+  },
+  {
+    name: "Business Website",
+    slug: "startup",
+    price: 499,
+    priceLabel: "$499",
+    delivery: "5-14 Days",
+    idealFor: "Best for growing businesses that need stronger branding, lead capture, and a more strategic web presence.",
+    includes: [
+      "Up to 5-7 Pages",
+      "Mobile Responsive",
+      "Custom Layout & Branding",
+      "Lead Capture Forms",
+      "SEO-Ready Structure",
+      "Speed Optimization",
+      "SSL Setup",
+      "Google Indexing"
+    ],
+    complimentary: [
+      "Free Facebook Ads for 3 Days",
+      "1 Year Free Hosting & Domain",
+      "Free Logo",
+      "14 Days Support"
+    ],
+    isPopular: true
+  },
+  {
+    name: "Professional Website",
+    slug: "professional",
+    price: 999,
+    priceLabel: "$999",
+    delivery: "14-21 Days",
+    idealFor: "Best for established companies that need a fully custom, scalable website aligned with brand and operations.",
+    includes: [
+      "8-12 Pages",
+      "Mobile Responsive",
+      "Fully Custom Design",
+      "Booking / Inquiry System",
+      "Advanced SEO Structure",
+      "Performance & Security Setup",
+      "Admin Dashboard"
+    ],
+    complimentary: [
+      "Free Facebook Ads for 5 Days",
+      "1 Year Hosting & Domain",
+      "Free Logo",
+      "Branding Package",
+      "30 Days Priority Support"
+    ]
+  },
+  {
+    name: "E-Commerce / Advanced System",
+    slug: "business-ecommerce",
+    price: 1999,
+    priceLabel: "$1,999+",
+    delivery: "21-30 Days",
+    idealFor: "Best for serious businesses that need online selling, automation, or a more advanced custom system.",
+    includes: [
+      "Online Store / Advanced Web System",
+      "Mobile Responsive",
+      "Payment Integration",
+      "Product Setup",
+      "Custom UI/UX",
+      "Admin Dashboard",
+      "Security Hardening",
+      "Speed Optimization"
+    ],
+    complimentary: [
+      "Free Facebook Ads for 7 Days",
+      "1 Year Hosting",
+      "Free Logo",
+      "Branding Package",
+      "30 Days Priority Support"
+    ]
   }
 ];
 
@@ -153,15 +251,26 @@ export default async function PricingPage() {
         </Reveal>
 
         <div className="mt-10">
-          <PricingPackageStack packages={pricingPackages} />
-        </div>
-
-        <Reveal className="mt-14 text-center">
-          <p className="text-base font-semibold text-white">Not sure which package fits your needs?</p>
-        </Reveal>
-
-        <div className="mx-auto mt-6 max-w-4xl">
-          <PricingFitQuiz packages={pricingPackages.map((item) => ({ slug: item.slug, name: item.name }))} />
+          <PricingMarketSwitcher
+            markets={[
+              {
+                key: "ph",
+                label: "PH Pricing",
+                eyebrow: "For Philippine Businesses",
+                description:
+                  "Structured investment packages tailored for local businesses that need premium positioning, stronger inquiry flow, and realistic delivery timelines.",
+                packages: pricingPackages
+              },
+              {
+                key: "international",
+                label: "International Pricing",
+                eyebrow: "For International Clients",
+                description:
+                  "Professional website packages for international clients who need premium design, strategic structure, and reliable execution with clear support coverage.",
+                packages: internationalPricingPackages
+              }
+            ]}
+          />
         </div>
       </SectionWrapper>
 

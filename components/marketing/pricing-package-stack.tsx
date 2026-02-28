@@ -14,7 +14,9 @@ export type PricingPackageCard = {
   name: string;
   slug: string;
   price: number;
+  priceLabel?: string;
   delivery: string;
+  idealFor?: string;
   includes: string[];
   complimentary: string[];
   note?: string;
@@ -62,6 +64,7 @@ export function PricingPackageStack({ packages }: { packages: PricingPackageCard
                         <Clock3 className="h-3.5 w-3.5 text-cyan-200" />
                         Delivery: {pkg.delivery}
                       </p>
+                      {pkg.idealFor ? <p className="mt-3 max-w-2xl text-sm text-slate-300">{pkg.idealFor}</p> : null}
                     </div>
                     {pkg.isPopular ? (
                       <span className="relative inline-flex items-center rounded-full border border-cyan-300/65 bg-cyan-400/15 px-3 py-1 text-xs font-semibold text-cyan-100">
@@ -70,7 +73,9 @@ export function PricingPackageStack({ packages }: { packages: PricingPackageCard
                       </span>
                     ) : null}
                   </div>
-                  <p className="mt-5 text-4xl font-extrabold tracking-tight text-blue-100 sm:text-5xl">{peso(pkg.price)}</p>
+                  <p className="mt-5 text-4xl font-extrabold tracking-tight text-blue-100 sm:text-5xl">
+                    {pkg.priceLabel || peso(pkg.price)}
+                  </p>
                 </CardHeader>
 
                 <CardContent className="relative space-y-6">
@@ -105,7 +110,7 @@ export function PricingPackageStack({ packages }: { packages: PricingPackageCard
                   </div>
 
                   <TrackedButtonLink
-                    href={`/contact?package=${pkg.slug}`}
+                    href={`/contact?package=${encodeURIComponent(pkg.name)}`}
                     eventName="book_free_consultation"
                     payload={{ placement: "pricing_card", package: pkg.slug }}
                     className="w-full sm:w-auto"
@@ -121,4 +126,3 @@ export function PricingPackageStack({ packages }: { packages: PricingPackageCard
     </div>
   );
 }
-
