@@ -19,6 +19,7 @@ import { FrameworkStepper } from "@/components/marketing/framework-stepper";
 import { GrowthPipeline } from "@/components/marketing/growth-pipeline";
 import { HomeHero } from "@/components/marketing/home-hero";
 import { HomePortfolioShowcase } from "@/components/marketing/home-portfolio-showcase";
+import { HomePricingPreviewSwitcher } from "@/components/marketing/home-pricing-preview-switcher";
 import { PremiumFaqAccordion } from "@/components/marketing/premium-faq-accordion";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { MarketingShell } from "@/components/marketing/shell";
@@ -26,12 +27,10 @@ import { TrackedButtonLink } from "@/components/marketing/tracked-button-link";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { TiltCard } from "@/components/motion/TiltCard";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { buildMetadata } from "@/lib/metadata";
 import { getPublicData } from "@/lib/site-data";
 import { highlightKeyword, typography } from "@/lib/typography";
-import { peso } from "@/lib/utils";
 
 export async function generateMetadata() {
   return buildMetadata({
@@ -181,9 +180,6 @@ export default async function HomePage() {
     data.pricing.find((item) => item.slug === data.settings.highlightPackageSlug) ||
     data.pricing.find((item) => item.isPopular) ||
     data.pricing[0];
-  const starter = data.pricing.find((item) => item.slug === "starter");
-  const startup = data.pricing.find((item) => item.slug === "startup") || popular;
-  const professional = data.pricing.find((item) => item.slug === "professional");
 
   const faqByQuestion = new Map(data.faq.map((item) => [item.question.toLowerCase(), item]));
   const faqItems = defaultFaqItems.map((item) => {
@@ -191,9 +187,6 @@ export default async function HomePage() {
     if (!fromDb) return item;
     return { id: fromDb.id, question: fromDb.question, answer: fromDb.answer };
   });
-
-  const hasFeature = (pkg: { includes: string[] } | undefined, keywords: string[]) =>
-    pkg?.includes.some((item) => keywords.some((keyword) => item.toLowerCase().includes(keyword))) ?? false;
 
   const testimonialItems =
     data.testimonials.length > 0
@@ -471,106 +464,93 @@ export default async function HomePage() {
         </Reveal>
 
         {popular ? (
-          <div className="mx-auto mt-10 max-w-4xl">
-            <TiltCard>
-              <Card className="border-cyan-300/35 bg-slate-900/55">
-                <CardHeader>
-                  <Badge className="relative w-fit overflow-hidden pr-4">
-                    <span className="relative z-10">Most Popular</span>
-                    <span className="pricing-badge-pulse absolute inset-0 rounded-full" />
-                  </Badge>
-                  <CardTitle className="mt-2 text-3xl">{popular.name}</CardTitle>
-                  <p className="text-2xl font-bold text-blue-200">{peso(popular.price)}</p>
-                  <p className="text-sm text-slate-300">Delivery: {popular.delivery}</p>
-                </CardHeader>
-                <CardContent>
-                  <Stagger className="grid gap-2 text-sm text-slate-200 sm:grid-cols-2" staggerChildren={0.05}>
-                    {popular.includes.slice(0, 8).map((item) => (
-                      <StaggerItem key={item}>
-                        <div className="flex gap-2">
-                          <BadgeCheck className="mt-0.5 h-4 w-4 text-blue-300" /> {item}
-                        </div>
-                      </StaggerItem>
-                    ))}
-                  </Stagger>
-
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <TrackedButtonLink
-                      href="/contact?package=startup"
-                      eventName="book_free_consultation"
-                      payload={{ placement: "pricing_primary" }}
-                    >
-                      Request Free Consultation
-                    </TrackedButtonLink>
-                    <TrackedButtonLink
-                      href="/pricing"
-                      eventName="compare_packages"
-                      payload={{ placement: "pricing_secondary" }}
-                      variant="outline"
-                    >
-                      Compare All Packages
-                    </TrackedButtonLink>
-                  </div>
-                </CardContent>
-              </Card>
-            </TiltCard>
-
-            <Reveal className="mt-6">
-              <Card>
-                <CardContent className="p-6">
-                  <p className="mb-4 text-sm font-semibold text-white">
-                    Quick Comparison: Starter vs Startup vs Professional
-                  </p>
-                  <div className="overflow-x-auto">
-                    <table className="w-full min-w-[560px] border-collapse text-sm">
-                      <thead>
-                        <tr className="border-b border-white/10 text-slate-200">
-                          <th className="px-3 py-2 text-left">Feature</th>
-                          <th className="px-3 py-2 text-left">Starter</th>
-                          <th className="px-3 py-2 text-left">Startup</th>
-                          <th className="px-3 py-2 text-left">Professional</th>
-                        </tr>
-                      </thead>
-                      <tbody className="text-slate-300">
-                        <tr className="border-b border-white/10">
-                          <td className="px-3 py-2 text-white">Pages</td>
-                          <td className="px-3 py-2">
-                            {starter?.includes.find((item) => item.toLowerCase().includes("page")) ?? "Included"}
-                          </td>
-                          <td className="px-3 py-2">
-                            {startup?.includes.find((item) => item.toLowerCase().includes("page")) ?? "Included"}
-                          </td>
-                          <td className="px-3 py-2">
-                            {professional?.includes.find((item) => item.toLowerCase().includes("page")) ?? "Included"}
-                          </td>
-                        </tr>
-                        <tr className="border-b border-white/10">
-                          <td className="px-3 py-2 text-white">Custom Branding</td>
-                          <td className="px-3 py-2">{hasFeature(starter, ["branding", "custom"]) ? "Yes" : "No"}</td>
-                          <td className="px-3 py-2">{hasFeature(startup, ["branding", "custom"]) ? "Yes" : "No"}</td>
-                          <td className="px-3 py-2">Yes</td>
-                        </tr>
-                        <tr className="border-b border-white/10">
-                          <td className="px-3 py-2 text-white">Lead Capture</td>
-                          <td className="px-3 py-2">{hasFeature(starter, ["contact form", "lead"]) ? "Yes" : "No"}</td>
-                          <td className="px-3 py-2">{hasFeature(startup, ["lead capture", "form"]) ? "Yes" : "No"}</td>
-                          <td className="px-3 py-2">
-                            {hasFeature(professional, ["inquiry", "booking", "form"]) ? "Yes" : "No"}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="px-3 py-2 text-white">Booking System</td>
-                          <td className="px-3 py-2">{hasFeature(starter, ["booking"]) ? "Yes" : "No"}</td>
-                          <td className="px-3 py-2">{hasFeature(startup, ["booking"]) ? "Yes" : "No"}</td>
-                          <td className="px-3 py-2">{hasFeature(professional, ["booking"]) ? "Yes" : "No"}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </CardContent>
-              </Card>
-            </Reveal>
-          </div>
+          <HomePricingPreviewSwitcher
+            markets={[
+              {
+                key: "ph",
+                label: "PH Pricing",
+                packageNameForContact: "Startup",
+                popular: {
+                  name: popular.name,
+                  slug: popular.slug,
+                  delivery: popular.delivery,
+                  includes: popular.includes,
+                  price: popular.price
+                },
+                comparison: {
+                  starter: data.pricing.find((item) => item.slug === "starter"),
+                  growth: data.pricing.find((item) => item.slug === "startup") || popular,
+                  professional: data.pricing.find((item) => item.slug === "professional"),
+                  labels: {
+                    starter: "Starter",
+                    growth: "Startup",
+                    professional: "Professional"
+                  }
+                }
+              },
+              {
+                key: "international",
+                label: "International Pricing",
+                packageNameForContact: "Business Website",
+                popular: {
+                  name: "Business Website",
+                  slug: "startup",
+                  delivery: "5-14 Days",
+                  includes: [
+                    "Up to 5-7 Pages",
+                    "Mobile Responsive",
+                    "Custom Layout & Branding",
+                    "Lead Capture Forms",
+                    "SEO-Ready Structure",
+                    "Speed Optimization",
+                    "SSL Setup",
+                    "Google Indexing"
+                  ],
+                  price: 499,
+                  priceLabel: "$499"
+                },
+                comparison: {
+                  starter: {
+                    includes: [
+                      "3-5 Pages Professional Website",
+                      "Mobile Responsive",
+                      "Contact Form",
+                      "Basic On-Page SEO",
+                      "Live Deployment"
+                    ]
+                  },
+                  growth: {
+                    includes: [
+                      "Up to 5-7 Pages",
+                      "Mobile Responsive",
+                      "Custom Layout & Branding",
+                      "Lead Capture Forms",
+                      "SEO-Ready Structure",
+                      "Speed Optimization",
+                      "SSL Setup",
+                      "Google Indexing"
+                    ]
+                  },
+                  professional: {
+                    includes: [
+                      "8-12 Pages",
+                      "Mobile Responsive",
+                      "Fully Custom Design",
+                      "Booking / Inquiry System",
+                      "Advanced SEO Structure",
+                      "Performance & Security Setup",
+                      "Admin Dashboard"
+                    ]
+                  },
+                  labels: {
+                    starter: "Starter Website",
+                    growth: "Business Website",
+                    professional: "Professional Website"
+                  }
+                }
+              }
+            ]}
+          />
         ) : null}
       </SectionWrapper>
 
