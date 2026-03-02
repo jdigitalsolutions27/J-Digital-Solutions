@@ -20,6 +20,8 @@ export async function generateMetadata() {
   });
 }
 
+export const revalidate = 300;
+
 const pricingPackages: PricingPackageCard[] = [
   {
     name: "Starter",

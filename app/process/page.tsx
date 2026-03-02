@@ -20,6 +20,8 @@ export async function generateMetadata() {
   });
 }
 
+export const revalidate = 300;
+
 const prepChecklist = [
   "Business goals and target audience",
   "Available brand assets (logo/colors)",

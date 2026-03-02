@@ -22,6 +22,8 @@ export async function generateMetadata() {
   });
 }
 
+export const revalidate = 300;
+
 export default async function ContactPage() {
   // Avoid concurrent DB calls (can overwhelm Supabase session pooler under load).
   const settings = await getSiteSettings();

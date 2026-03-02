@@ -23,6 +23,8 @@ export async function generateMetadata() {
   });
 }
 
+export const revalidate = 300;
+
 export default async function PortfolioPage() {
   const projects = await db.portfolioProject
     .findMany({

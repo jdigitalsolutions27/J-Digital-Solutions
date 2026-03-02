@@ -12,6 +12,8 @@ import { db } from "@/lib/db";
 import { buildMetadata } from "@/lib/metadata";
 import { typography } from "@/lib/typography";
 
+export const revalidate = 300;
+
 type IndustryProfile = {
   outcome: string;
   challenge: string;
@@ -119,6 +121,17 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     description: project.shortSummary,
     path: `/portfolio/${project.slug}`
   });
+}
+
+export async function generateStaticParams() {
+  const projects = await db.portfolioProject
+    .findMany({
+      select: { slug: true },
+      orderBy: { position: "asc" }
+    })
+    .catch(() => []);
+
+  return projects.map((project) => ({ slug: project.slug }));
 }
 
 export default async function PortfolioProjectPage({ params }: { params: { slug: string } }) {

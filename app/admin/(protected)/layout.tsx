@@ -6,6 +6,8 @@ import { AdminSidebar } from "@/components/admin/sidebar";
 import { CurrentPageIndicator } from "@/components/admin/current-page-indicator";
 import { SignOutButton } from "@/components/admin/signout-button";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProtectedAdminLayout({
   children
 }: {

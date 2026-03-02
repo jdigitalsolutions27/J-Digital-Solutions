@@ -45,6 +45,8 @@ export async function generateMetadata() {
   });
 }
 
+export const revalidate = 300;
+
 const trustItems = [
   { icon: Smartphone, label: "Mobile-Ready" },
   { icon: SearchCheck, label: "SEO Foundation" },

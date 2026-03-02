@@ -3,6 +3,8 @@ import { MarketingShell } from "@/components/marketing/shell";
 import { buildMetadata } from "@/lib/metadata";
 import { typography } from "@/lib/typography";
 
+export const revalidate = 300;
+
 export async function generateMetadata() {
   return buildMetadata({
     title: "Terms of Service | J-Digital Solutions",

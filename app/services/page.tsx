@@ -24,6 +24,8 @@ export async function generateMetadata() {
   });
 }
 
+export const revalidate = 300;
+
 function serviceLens(title: string) {
   const map: Record<string, { whoFor: string; whatYouGet: string[]; useCase: string }> = {
     "Website Design & Development": {

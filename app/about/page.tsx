@@ -25,6 +25,8 @@ export async function generateMetadata() {
   });
 }
 
+export const revalidate = 300;
+
 const principles = [
   {
     title: "Structure Wins",

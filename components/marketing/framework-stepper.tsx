@@ -39,6 +39,14 @@ export function FrameworkStepper({ steps }: { steps: Step[] }) {
     return (activeIndex / (steps.length - 1)) * 100;
   }, [activeIndex, steps.length]);
 
+  if (steps.length === 0 || !activeStep) {
+    return (
+      <div className="premium-panel p-6 text-sm text-slate-300 sm:p-8">
+        Process steps will appear here once they are configured in the CMS.
+      </div>
+    );
+  }
+
   return (
     <div ref={sectionRef}>
       <div className="hidden gap-6 lg:grid lg:grid-cols-[0.95fr,1.05fr]">
@@ -54,7 +62,7 @@ export function FrameworkStepper({ steps }: { steps: Step[] }) {
 
             <div className="space-y-3">
               {steps.map((step, index) => {
-                const isActive = step.id === activeStep.id;
+                const isActive = step.id === activeStep?.id;
                 const isPast = index < activeIndex;
                 return (
                   <button
