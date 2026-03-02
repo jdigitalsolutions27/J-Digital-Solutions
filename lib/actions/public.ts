@@ -3,7 +3,6 @@
 import { headers } from "next/headers";
 
 import { db } from "@/lib/db";
-import { sendAuditLeadNotificationEmail, sendLeadNotificationEmail } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { auditLeadSchema, leadSchema } from "@/lib/validators";
 
@@ -39,6 +38,7 @@ export async function submitLeadAction(input: unknown) {
   });
 
   try {
+    const { sendLeadNotificationEmail } = await import("@/lib/email");
     await sendLeadNotificationEmail(parsed.data);
   } catch (error) {
     console.error("Failed to send consultation lead notification email:", error);
@@ -91,6 +91,7 @@ export async function submitAuditLeadAction(input: unknown) {
   });
 
   try {
+    const { sendAuditLeadNotificationEmail } = await import("@/lib/email");
     await sendAuditLeadNotificationEmail(parsed.data);
   } catch (error) {
     console.error("Failed to send audit lead notification email:", error);

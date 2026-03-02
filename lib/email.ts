@@ -1,14 +1,10 @@
 import nodemailer from "nodemailer";
-import { Resend } from "resend";
-
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
-const resendFromEmail = process.env.RESEND_FROM_EMAIL || "J-Digital Leads <onboarding@resend.dev>";
 
 const smtpHost = process.env.SMTP_HOST;
 const smtpPort = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 587;
 const smtpUser = process.env.SMTP_USER;
 const smtpPass = process.env.SMTP_PASS;
-const smtpFromEmail = process.env.SMTP_FROM_EMAIL || smtpUser || resendFromEmail;
+const smtpFromEmail = process.env.SMTP_FROM_EMAIL || smtpUser || "J-Digital Leads <no-reply@jdigital.solutions>";
 const smtpRejectUnauthorized = process.env.SMTP_TLS_REJECT_UNAUTHORIZED !== "false";
 
 const smtpTransport =
@@ -26,34 +22,6 @@ const smtpTransport =
         }
       })
     : null;
-
-async function sendWithResend({
-  to,
-  subject,
-  html,
-  replyTo
-}: {
-  to: string;
-  subject: string;
-  html: string;
-  replyTo: string;
-}) {
-  if (!resend) return false;
-
-  const result = await resend.emails.send({
-    from: resendFromEmail,
-    to,
-    subject,
-    html,
-    replyTo
-  });
-
-  if ("error" in result && result.error) {
-    throw new Error(result.error.message);
-  }
-
-  return true;
-}
 
 async function sendWithSmtp({
   to,
@@ -90,17 +58,10 @@ async function sendNotification({
   html: string;
   replyTo: string;
 }) {
-  try {
-    const sentWithResend = await sendWithResend({ to, subject, html, replyTo });
-    if (sentWithResend) return;
-  } catch (error) {
-    console.error("Resend delivery failed, trying SMTP fallback:", error);
-  }
-
   const sentWithSmtp = await sendWithSmtp({ to, subject, html, replyTo });
   if (sentWithSmtp) return;
 
-  console.warn("No email provider configured. Set RESEND_API_KEY or SMTP credentials.");
+  console.warn("No SMTP email provider configured. Set SMTP credentials.");
 }
 
 export async function sendLeadNotificationEmail(payload: {
