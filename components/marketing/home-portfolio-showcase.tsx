@@ -47,6 +47,18 @@ function projectOutcome(industry: string) {
   return map[normalizeIndustry(industry)] ?? "Outcome: stronger trust and better inquiry conversion.";
 }
 
+function projectAngle(industry: string) {
+  const map: Record<string, string> = {
+    Construction: "Designed to make the business look more established before quote conversations begin.",
+    Healthcare: "Structured to improve trust, readability, and first-contact confidence on mobile.",
+    "E-Commerce": "Built to present products more clearly and increase purchase intent.",
+    Consulting: "Positioned to strengthen authority and attract more serious consultation requests.",
+    "Real Estate": "Organized to improve listing clarity and lead quality from inquiry forms."
+  };
+
+  return map[normalizeIndustry(industry)] ?? "Designed to improve trust, clarity, and inquiry readiness.";
+}
+
 function buildMixedPreview(projects: HomeProject[], limit = HOME_PREVIEW_COUNT) {
   if (projects.length <= limit) return projects;
 
@@ -154,12 +166,17 @@ export function HomePortfolioShowcase({ projects }: { projects: HomeProject[] })
               className="group premium-panel overflow-hidden"
             >
               <div className="relative h-72 overflow-hidden bg-[linear-gradient(145deg,rgba(56,189,248,0.12),rgba(255,255,255,0.04),rgba(96,165,250,0.12))] sm:h-[380px]">
+                <div className="absolute inset-x-0 top-0 z-10 flex h-8 items-center gap-1.5 border-b border-white/10 bg-slate-950/55 px-4 backdrop-blur">
+                  <span className="h-2.5 w-2.5 rounded-full bg-rose-300/80" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-amber-300/80" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-300/80" />
+                </div>
                 <motion.div
                   className="relative h-full w-full"
                   whileHover={reduceMotion ? undefined : { scale: 1.04, x: 8 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                 >
-                  <Image src={featured.coverImage} alt={featured.title} fill className="object-contain object-top p-2" />
+                  <Image src={featured.coverImage} alt={featured.title} fill className="object-contain object-top px-3 pb-3 pt-10" />
                 </motion.div>
                 <Link
                   href={`/portfolio/${featured.slug}`}
@@ -177,6 +194,7 @@ export function HomePortfolioShowcase({ projects }: { projects: HomeProject[] })
                 </div>
                 <h3 className="text-2xl font-bold text-white">{featured.title}</h3>
                 <p className="text-sm text-slate-300">{featured.shortSummary}</p>
+                <p className="text-sm text-slate-300/90">{projectAngle(featured.industry)}</p>
                 <p className="text-sm text-cyan-100">{projectOutcome(featured.industry)}</p>
                 <div className="flex flex-wrap gap-2">
                   {featured.servicesProvided.slice(0, 3).map((service) => (
@@ -211,12 +229,17 @@ export function HomePortfolioShowcase({ projects }: { projects: HomeProject[] })
                 className="group premium-panel overflow-hidden"
               >
                 <div className="relative h-48 overflow-hidden bg-[linear-gradient(145deg,rgba(56,189,248,0.1),rgba(255,255,255,0.03),rgba(96,165,250,0.1))]">
+                  <div className="absolute inset-x-0 top-0 z-10 flex h-7 items-center gap-1.5 border-b border-white/10 bg-slate-950/55 px-3 backdrop-blur">
+                    <span className="h-2 w-2 rounded-full bg-rose-300/80" />
+                    <span className="h-2 w-2 rounded-full bg-amber-300/80" />
+                    <span className="h-2 w-2 rounded-full bg-emerald-300/80" />
+                  </div>
                   <motion.div
                     className="relative h-full w-full"
                     whileHover={reduceMotion ? undefined : { scale: 1.05, y: -4 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <Image src={project.coverImage} alt={project.title} fill className="object-contain object-top p-2" />
+                    <Image src={project.coverImage} alt={project.title} fill className="object-contain object-top px-3 pb-3 pt-9" />
                   </motion.div>
                   <Link
                     href={`/portfolio/${project.slug}`}
@@ -232,6 +255,7 @@ export function HomePortfolioShowcase({ projects }: { projects: HomeProject[] })
                 <div className="space-y-2 p-4">
                   <p className="text-sm text-cyan-200">{normalizeIndustry(project.industry)}</p>
                   <h4 className="font-semibold text-white">{project.title}</h4>
+                  <p className="text-sm text-slate-300">{projectAngle(project.industry)}</p>
                   <Link
                     href={`/portfolio/${project.slug}`}
                     className="inline-flex items-center gap-1 text-sm text-slate-200 hover:text-white"

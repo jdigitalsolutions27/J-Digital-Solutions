@@ -1,9 +1,13 @@
 import {
   ArrowRight,
   BadgeCheck,
+  BriefcaseBusiness,
   CheckCircle2,
+  Clock3,
   Gauge,
+  Globe2,
   LayoutDashboard,
+  MessageSquareQuote,
   SearchCheck,
   ShieldCheck,
   Smartphone,
@@ -34,9 +38,9 @@ import { highlightKeyword, typography } from "@/lib/typography";
 
 export async function generateMetadata() {
   return buildMetadata({
-    title: "J-Digital Solutions | Websites That Convert for PH Businesses",
+    title: "J-Digital Solutions | Premium Websites for Growth-Driven Businesses",
     description:
-      "Premium, conversion-focused websites for Philippine businesses. Build trust, capture leads, and scale with confidence.",
+      "Premium, conversion-focused websites for growth-driven businesses worldwide. Build trust, capture leads, and scale with confidence.",
     path: "/"
   });
 }
@@ -72,7 +76,7 @@ const whyChooseItems = [
   {
     icon: Smartphone,
     title: "Mobile-First Performance",
-    description: "Fast, clean, and optimized for how Philippine buyers browse on mobile."
+    description: "Fast, clean, and optimized for how modern buyers browse and compare on mobile."
   },
   {
     icon: Gauge,
@@ -119,12 +123,56 @@ const valueMetrics = [
   }
 ];
 
+const globalCollaborationItems = [
+  {
+    title: "Timezone-Friendly Communication",
+    description: "We structure updates and meetings around practical timezone overlap so projects keep moving without friction."
+  },
+  {
+    title: "Clear Weekly Progress",
+    description: "Every project moves with visible milestones, clear deliverables, and straightforward communication."
+  },
+  {
+    title: "Remote-Ready Execution",
+    description: "From strategy to launch, our workflow is built for smooth collaboration with clients across different regions."
+  },
+  {
+    title: "Structured Handover",
+    description: "You receive admin access, launch guidance, and a clean transition after the build goes live."
+  }
+];
+
+const marketReadinessItems = [
+  {
+    icon: Globe2,
+    title: "North America",
+    description: "Premium delivery, async-friendly communication, and clear milestone updates for US and Canada-based clients."
+  },
+  {
+    icon: BadgeCheck,
+    title: "UK & Europe",
+    description: "Structured review cycles and high-clarity execution for service businesses that need a reliable remote build partner."
+  },
+  {
+    icon: BriefcaseBusiness,
+    title: "Asia Pacific",
+    description: "Fast-moving collaboration for businesses that need premium positioning, modern UX, and practical launch speed."
+  },
+  {
+    icon: Clock3,
+    title: "Middle East",
+    description: "Timezone-aware planning and polished business presentation for inquiry-driven companies and premium service brands."
+  }
+];
+
 const defaultTestimonials = [
   {
     id: "home-testimonial-1",
-    name: "Engr. Paolo Dela Cruz",
-    role: "General Manager",
-    company: "PrimeSteel Structures",
+    name: "Michael Turner",
+    role: "Managing Director",
+    company: "Turner Build Group",
+    region: "North America",
+    focus: "Construction",
     quote:
       "Before launching our new website, most inquiries were random and hard to qualify. After J-Digital rebuilt our site, leads became clearer, more serious, and easier for our team to close."
   },
@@ -133,18 +181,31 @@ const defaultTestimonials = [
     name: "Dr. Andrea Villanueva",
     role: "Clinic Owner",
     company: "VitalCore Health Clinic",
+    region: "Asia Pacific",
+    focus: "Healthcare",
     quote:
       "The website now reflects the professionalism we want patients to feel before they even message us. Mobile inquiries improved, and patients now ask more specific service questions."
   },
   {
     id: "home-testimonial-3",
-    name: "Mikaela Santos",
+    name: "Sophie Bennett",
     role: "Founder",
-    company: "LuxeCart Online",
+    company: "Bennett Commerce Studio",
+    region: "United Kingdom",
+    focus: "E-Commerce",
     quote:
       "J-Digital gave us a premium online presence that finally matches our brand. The structure is clean, fast, and built for conversion. It feels like an actual growth asset, not just a website."
   }
 ];
+
+const testimonialMeta: Record<string, { region: string; focus: string }> = {
+  "Turner Build Group": { region: "North America", focus: "Construction" },
+  "VitalCore Health Clinic": { region: "Asia Pacific", focus: "Healthcare" },
+  "Bennett Commerce Studio": { region: "United Kingdom", focus: "E-Commerce" },
+  "Elevate Consulting Group": { region: "Singapore", focus: "Consulting" },
+  "Brooks Industrial Systems": { region: "North America", focus: "Industrial Services" },
+  "WellSpring Family Care": { region: "Asia Pacific", focus: "Healthcare" }
+};
 
 const defaultFaqItems = [
   {
@@ -195,9 +256,17 @@ export default async function HomePage() {
           name: item.name,
           role: item.role,
           company: item.company,
-          quote: item.quote
+          quote: item.quote,
+          region: testimonialMeta[item.company]?.region || "",
+          focus: testimonialMeta[item.company]?.focus || item.company || "Client Engagement"
         }))
       : defaultTestimonials;
+  const projectProofHighlights = data.portfolio.slice(0, 3).map((project) => ({
+    id: project.id,
+    title: project.title,
+    industry: project.industry,
+    shortSummary: project.shortSummary
+  }));
 
   return (
     <MarketingShell>
@@ -232,7 +301,7 @@ export default async function HomePage() {
           <Reveal className="space-y-5">
             <p className={typography.eyebrow}>Pain Points</p>
             <h2 className={`${typography.pageTitle} heading-underline`}>
-              Why local businesses still struggle to convert online
+              Why growth-focused businesses still struggle to convert online
             </h2>
             <p className={typography.sectionLead}>
               Most websites look acceptable but fail at one critical job: turning traffic into qualified inquiries.
@@ -257,7 +326,7 @@ export default async function HomePage() {
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-rose-200/90">Before</p>
                   <ul className="mt-2 space-y-1 text-sm text-slate-200">
-                    <li>FB-only inquiries</li>
+                    <li>Social-only inquiries</li>
                     <li>Lost messages</li>
                     <li>Low trust</li>
                   </ul>
@@ -296,7 +365,7 @@ export default async function HomePage() {
         <Reveal>
           <SectionHeading
             eyebrow="Solution"
-            title="Your Conversion Pipeline: Attention → Inquiry → Growth"
+            title="Your Conversion Pipeline: Attention -> Inquiry -> Growth"
             description="J-Digital combines persuasive messaging, premium design, and conversion strategy so your website performs like a sales asset."
           />
         </Reveal>
@@ -333,6 +402,82 @@ export default async function HomePage() {
       </SectionWrapper>
 
       <SoftWaveSeparator />
+
+      <SectionWrapper variant="raised" glow="soft" id="global-collaboration">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Global Collaboration"
+            title="Built to work smoothly with clients across regions"
+            description="A clear process matters even more when projects move across timezones, markets, and teams."
+          />
+        </Reveal>
+        <Stagger className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {globalCollaborationItems.map((item) => (
+            <StaggerItem key={item.title}>
+              <Card className="h-full border-white/12 bg-white/[0.04]">
+                <CardContent className="space-y-3 p-5">
+                  <h3 className="text-base font-semibold text-white">{item.title}</h3>
+                  <p className="text-sm text-slate-300">{item.description}</p>
+                </CardContent>
+              </Card>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </SectionWrapper>
+
+      <SectionWrapper variant="base" glow="soft" id="global-proof" withTopDivider withBottomDivider>
+        <Reveal>
+          <SectionHeading
+            eyebrow="Global Readiness"
+            title="Set up for international delivery without losing speed or structure"
+            description="The workflow, communication style, and project packaging are designed to support serious businesses across different markets."
+          />
+        </Reveal>
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr,0.9fr]">
+          <Stagger className="grid gap-4 sm:grid-cols-2">
+            {marketReadinessItems.map((item) => (
+              <StaggerItem key={item.title}>
+                <Card className="h-full border-white/12 bg-white/[0.04]">
+                  <CardContent className="space-y-4 p-5">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-300/35 bg-cyan-500/12 text-cyan-100">
+                      <item.icon className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <h3 className="text-base font-semibold text-white">{item.title}</h3>
+                      <p className="mt-2 text-sm text-slate-300">{item.description}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </StaggerItem>
+            ))}
+          </Stagger>
+
+          <Card className="border-cyan-300/20 bg-cyan-500/[0.05]">
+            <CardContent className="p-6">
+              <p className="text-xs uppercase tracking-[0.2em] text-cyan-200">Case Study Snapshots</p>
+              <div className="mt-5 space-y-4">
+                {projectProofHighlights.length > 0 ? (
+                  projectProofHighlights.map((project) => (
+                    <div key={project.id} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-semibold text-white">{project.title}</p>
+                        <span className="rounded-full border border-white/15 px-2.5 py-1 text-[11px] text-cyan-100">
+                          {project.industry}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-300">{project.shortSummary}</p>
+                    </div>
+                  ))
+                ) : (
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-slate-300">
+                    Portfolio case-study highlights will appear here as more projects are published.
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </SectionWrapper>
 
       <SectionWrapper variant="base" glow="soft" id="portfolio">
         <Reveal>
@@ -434,11 +579,25 @@ export default async function HomePage() {
               <TiltCard className="h-full">
                 <Card className="h-full border-white/15 bg-white/[0.04]">
                   <CardContent className="space-y-4 p-6">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-cyan-100">
+                        <MessageSquareQuote className="h-3.5 w-3.5" />
+                        Client Feedback
+                      </span>
+                      {item.region ? (
+                        <span className="rounded-full border border-white/15 px-3 py-1 text-[11px] text-slate-300">
+                          {item.region}
+                        </span>
+                      ) : null}
+                    </div>
                     <p className="text-sm leading-relaxed text-slate-200">&ldquo;{item.quote}&rdquo;</p>
                     <div>
                       <p className="font-semibold text-white">{item.name}</p>
                       <p className="text-xs text-slate-300">
                         {item.role}, {item.company}
+                      </p>
+                      <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-cyan-200">
+                        {item.focus}
                       </p>
                     </div>
                   </CardContent>

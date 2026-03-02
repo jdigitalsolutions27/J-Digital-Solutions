@@ -74,7 +74,7 @@ export default async function ServicesPage() {
           <p className={typography.eyebrow}>Services</p>
           <h1 className={`mt-3 ${typography.heroTitle}`}>Execution systems built for credibility and growth</h1>
           <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-200 sm:text-base">
-            Every service is structured to improve trust, conversion clarity, and operational speed.
+            Every service is designed to strengthen positioning, improve conversion clarity, and support a more reliable digital sales process.
           </p>
           <div className="mt-6">
             <Button asChild size="lg">

@@ -93,7 +93,7 @@ export function HomeHero({
           className="max-w-3xl text-left"
         >
           <motion.div variants={fadeIn}>
-            <Badge className="mb-7">Built for Philippine Businesses</Badge>
+            <Badge className="mb-7">Premium Web Design and Conversion Studio</Badge>
           </motion.div>
 
           <h1 className="text-balance text-4xl font-extrabold leading-[1.04] tracking-[-0.02em] text-white [text-shadow:0_12px_38px_rgba(2,6,23,0.7)] sm:text-5xl lg:text-6xl">
@@ -146,7 +146,7 @@ export function HomeHero({
           <motion.div variants={fadeUp} className="mt-7 flex flex-wrap items-center gap-2">
             <Badge variant="secondary" className="gap-1.5 px-3 py-1.5">
               <Building2 className="h-3.5 w-3.5" />
-              Built for PH Businesses
+              Global Client Ready
             </Badge>
             <Badge variant="secondary" className="gap-1.5 px-3 py-1.5">
               <Clock3 className="h-3.5 w-3.5" />
@@ -166,7 +166,7 @@ export function HomeHero({
             variants={fadeUp}
             className="mt-7 max-w-2xl rounded-2xl border border-white/15 bg-slate-900/45 px-4 py-3 text-xs text-slate-100 sm:text-sm"
           >
-            Industries we build for: Construction | Healthcare | E-Commerce | Consulting | Real Estate
+            Supporting service businesses across North America, the UK, Europe, the Middle East, and Asia Pacific with premium web systems built for trust, inquiries, and growth.
           </motion.p>
         </motion.div>
       </div>

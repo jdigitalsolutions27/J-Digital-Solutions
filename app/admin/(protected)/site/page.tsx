@@ -15,9 +15,13 @@ export default async function AdminSiteSettingsPage() {
 
   return (
     <div>
-      <AdminPageHeader title="Site Settings" description="Manage brand identity, CTAs, social links, and SEO defaults." />
+      <AdminPageHeader title="Site Settings" description="Manage the global brand message, public CTAs, contact details, social links, and SEO defaults." />
 
       <ActionForm action={saveSiteSettingsAction} submitLabel="Save Site Settings" className="grid gap-6">
+        <div className="rounded-2xl border border-cyan-300/20 bg-cyan-500/[0.05] p-4 text-sm text-slate-200">
+          Keep the public copy positioned for a global audience. Recommended direction: premium websites, structured execution, and conversion-focused messaging for businesses worldwide.
+        </div>
+
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="brandName">Brand Name</Label>
@@ -38,11 +42,13 @@ export default async function AdminSiteSettingsPage() {
         <div className="space-y-2">
           <Label htmlFor="heroHeadline">Hero Headline</Label>
           <Input id="heroHeadline" name="heroHeadline" defaultValue={settings.heroHeadline} required />
+          <p className="text-xs text-slate-400">Keep this outcome-driven, premium, and globally relevant.</p>
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="heroSubheadline">Hero Subheadline</Label>
           <Textarea id="heroSubheadline" name="heroSubheadline" defaultValue={settings.heroSubheadline} required rows={4} />
+          <p className="text-xs text-slate-400">Recommended tone: structured, premium, and clear about trust, conversion, and execution.</p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -79,6 +85,7 @@ export default async function AdminSiteSettingsPage() {
           <div className="space-y-2">
             <Label htmlFor="officeAddress">Office Address</Label>
             <Input id="officeAddress" name="officeAddress" defaultValue={settings.officeAddress || ""} />
+            <p className="text-xs text-slate-400">Example: `Remote-first | Philippines-based | Serving worldwide`</p>
           </div>
         </div>
 
@@ -107,6 +114,7 @@ export default async function AdminSiteSettingsPage() {
         <div className="space-y-2">
           <Label htmlFor="calendarBookingLink">Calendar Booking Link</Label>
           <Input id="calendarBookingLink" name="calendarBookingLink" defaultValue={settings.calendarBookingLink || ""} />
+          <p className="text-xs text-slate-400">Add your Calendly or booking link if you want international leads to schedule directly.</p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
@@ -132,6 +140,7 @@ export default async function AdminSiteSettingsPage() {
         <div className="space-y-2">
           <Label htmlFor="seoDefaultDescription">SEO Default Description</Label>
           <Textarea id="seoDefaultDescription" name="seoDefaultDescription" defaultValue={settings.seoDefaultDescription} rows={3} required />
+          <p className="text-xs text-slate-400">Keep this broad enough for global search visibility, not only one local market.</p>
         </div>
 
         <label className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3 text-sm text-slate-200">

@@ -26,26 +26,36 @@ async function main() {
   await prisma.siteSettings.upsert({
     where: { id: 1 },
     update: {
+      heroHeadline: "Premium Websites Built for Trust, Leads, and Growth",
+      heroSubheadline:
+        "We design and build conversion-focused websites for growth-driven businesses worldwide, combining premium design, sharp positioning, and structured execution.",
+      secondaryCtaLabel: "View Projects",
+      seoDefaultTitle: "J-Digital Solutions | Premium Websites for Growth-Driven Businesses",
+      seoDefaultDescription:
+        "J-Digital Solutions creates premium websites, landing pages, and growth systems for service businesses worldwide.",
       email: officialEmail,
       phone: officialPhone,
       facebookUrl: officialFacebook,
       messageButtonLink: officialMessenger,
       messengerLink: officialMessenger,
+      officeAddress: "Remote-first | Philippines-based | Serving worldwide",
       testimonialsEnabled: true
     },
     create: {
       id: 1,
-      heroHeadline: "Turn Your Website Into a 24/7 Client-Generating System",
+      heroHeadline: "Premium Websites Built for Trust, Leads, and Growth",
       heroSubheadline:
-        "We design and build premium websites for Philippine businesses that improve trust, capture leads, and drive consistent growth.",
-      seoDefaultTitle: "J-Digital Solutions | Premium Websites for Philippine Businesses",
+        "We design and build conversion-focused websites for growth-driven businesses worldwide, combining premium design, sharp positioning, and structured execution.",
+      secondaryCtaLabel: "View Projects",
+      seoDefaultTitle: "J-Digital Solutions | Premium Websites for Growth-Driven Businesses",
       seoDefaultDescription:
-        "J-Digital Solutions creates conversion-focused websites, landing pages, and growth systems for Philippine SMEs and local brands.",
+        "J-Digital Solutions creates premium websites, landing pages, and growth systems for service businesses worldwide.",
       email: officialEmail,
       phone: officialPhone,
       facebookUrl: officialFacebook,
       messageButtonLink: officialMessenger,
       messengerLink: officialMessenger,
+      officeAddress: "Remote-first | Philippines-based | Serving worldwide",
       testimonialsEnabled: true
     }
   });
@@ -298,8 +308,8 @@ async function main() {
       position: 4
     },
     {
-      question: "Is this suitable for local Philippine businesses?",
-      answer: "Yes. Our process and messaging are tailored for Philippine audiences and local buyer behavior.",
+      question: "Can you work with businesses outside the Philippines?",
+      answer: "Yes. We work with businesses worldwide and structure communication, delivery, and recommendations around your market and goals.",
       position: 5
     }
   ];
@@ -373,9 +383,9 @@ async function main() {
 
   const testimonials = [
     {
-      name: "Engr. Paolo Dela Cruz",
-      role: "General Manager",
-      company: "PrimeSteel Structures",
+      name: "Michael Turner",
+      role: "Managing Director",
+      company: "Turner Build Group",
       quote:
         "Before the redesign, most inquiries were generic and difficult to qualify. After launch, we started receiving clearer project requests and better-fit clients from the website.",
       position: 1
@@ -389,9 +399,9 @@ async function main() {
       position: 2
     },
     {
-      name: "Mikaela Santos",
+      name: "Sophie Bennett",
       role: "Founder",
-      company: "LuxeCart Online",
+      company: "Bennett Commerce Studio",
       quote:
         "The final site feels premium and conversion-ready. Product pages are easier to browse on mobile, and the overall brand perception improved significantly.",
       position: 3
@@ -405,9 +415,9 @@ async function main() {
       position: 4
     },
     {
-      name: "Anthony Reyes",
-      role: "Operations Head",
-      company: "TitanFrame Construction",
+      name: "Daniel Brooks",
+      role: "Operations Director",
+      company: "Brooks Industrial Systems",
       quote:
         "We used to rely mostly on Facebook messages. With the new website funnel, inquiries are now organized, and our sales team spends less time filtering low-intent leads.",
       position: 5

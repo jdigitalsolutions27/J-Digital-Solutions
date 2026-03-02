@@ -108,6 +108,8 @@ export async function sendLeadNotificationEmail(payload: {
   email: string;
   mobileNumber: string;
   businessName: string;
+  country?: string;
+  timezone?: string;
   industry: string;
   packageInterest: string;
   budgetRange: string;
@@ -126,6 +128,8 @@ export async function sendLeadNotificationEmail(payload: {
     <p><strong>Email:</strong> ${payload.email}</p>
     <p><strong>Mobile:</strong> ${payload.mobileNumber}</p>
     <p><strong>Business:</strong> ${payload.businessName}</p>
+    <p><strong>Country:</strong> ${payload.country || "Not provided"}</p>
+    <p><strong>Timezone:</strong> ${payload.timezone || "Not provided"}</p>
     <p><strong>Industry:</strong> ${payload.industry}</p>
     <p><strong>Package:</strong> ${payload.packageInterest}</p>
     <p><strong>Budget:</strong> ${payload.budgetRange}</p>

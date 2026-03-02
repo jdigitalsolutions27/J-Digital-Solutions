@@ -110,6 +110,8 @@ export const leadSchema = z.object({
   email: z.string().email(),
   mobileNumber: z.string().min(8),
   businessName: z.string().min(2),
+  country: z.string().optional().or(z.literal("")),
+  timezone: z.string().optional().or(z.literal("")),
   industry: z.string().min(2),
   packageInterest: z.string().min(2),
   budgetRange: z.string().min(2),

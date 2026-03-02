@@ -102,6 +102,11 @@ export default async function AdminLeadsPage({
               <TableCell>
                 <p>{lead.businessName}</p>
                 <p className="text-xs text-slate-300">{lead.industry}</p>
+                {(lead.country || lead.timezone) ? (
+                  <p className="mt-1 text-xs text-slate-400">
+                    {[lead.country, lead.timezone].filter(Boolean).join(" | ")}
+                  </p>
+                ) : null}
               </TableCell>
               <TableCell>
                 <p>{lead.packageInterest}</p>

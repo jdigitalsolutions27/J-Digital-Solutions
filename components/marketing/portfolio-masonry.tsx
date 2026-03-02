@@ -35,6 +35,30 @@ function normalizeIndustry(industry: string) {
   return industry;
 }
 
+function projectAngle(industry: string) {
+  const map: Record<string, string> = {
+    Construction: "Authority-first presentation for contractors, builders, and engineering firms.",
+    Healthcare: "Trust-led structure for clinics, care providers, and health-focused brands.",
+    "E-Commerce": "Clearer product storytelling with stronger conversion readiness.",
+    Consulting: "Premium positioning for expertise-led businesses that sell trust first.",
+    "Real Estate": "Polished listing presentation with cleaner inquiry flow."
+  };
+
+  return map[normalizeIndustry(industry)] || "Premium positioning with clearer trust and conversion flow.";
+}
+
+function outcomeLine(industry: string) {
+  const map: Record<string, string> = {
+    Construction: "Outcome direction: stronger contractor trust and more qualified quote inquiries.",
+    Healthcare: "Outcome direction: better mobile confidence and cleaner patient inquiry paths.",
+    "E-Commerce": "Outcome direction: improved product confidence and stronger buying intent.",
+    Consulting: "Outcome direction: stronger authority signals and higher-value consult requests.",
+    "Real Estate": "Outcome direction: better property navigation and better-fit inquiries."
+  };
+
+  return map[normalizeIndustry(industry)] || "Outcome direction: improved trust, clarity, and inquiry quality.";
+}
+
 function buildMixedProjects(projects: PortfolioItem[]) {
   const grouped = new Map<string, PortfolioItem[]>();
   projects.forEach((project) => {
@@ -120,12 +144,17 @@ export function PortfolioMasonry({ projects }: { projects: PortfolioItem[] }) {
             className="group premium-panel h-full overflow-hidden"
           >
             <div className="relative h-56 overflow-hidden bg-[linear-gradient(145deg,rgba(56,189,248,0.1),rgba(255,255,255,0.03),rgba(96,165,250,0.1))]">
+              <div className="absolute inset-x-0 top-0 z-10 flex h-8 items-center gap-1.5 border-b border-white/10 bg-slate-950/55 px-4 backdrop-blur">
+                <span className="h-2.5 w-2.5 rounded-full bg-rose-300/80" />
+                <span className="h-2.5 w-2.5 rounded-full bg-amber-300/80" />
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-300/80" />
+              </div>
               <motion.div
                 className="relative h-full w-full"
                 whileHover={reduceMotion ? undefined : { scale: 1.05, y: -4 }}
                 transition={{ duration: 0.45 }}
               >
-                <Image src={project.coverImage} alt={project.title} fill className="object-contain object-top p-2" />
+                <Image src={project.coverImage} alt={project.title} fill className="object-contain object-top px-3 pb-3 pt-10" />
               </motion.div>
               <Link
                 href={`/portfolio/${project.slug}`}
@@ -148,6 +177,8 @@ export function PortfolioMasonry({ projects }: { projects: PortfolioItem[] }) {
               </div>
               <p className="text-sm text-cyan-200">{normalizeIndustry(project.industry)}</p>
               <p className="text-sm text-slate-300">{project.shortSummary}</p>
+              <p className="text-sm text-slate-300/90">{projectAngle(project.industry)}</p>
+              <p className="text-xs text-cyan-100">{outcomeLine(project.industry)}</p>
               <div className="flex flex-wrap gap-2">
                 {project.tags.slice(0, 4).map((tag) => (
                   <span key={tag} className="rounded-full border border-white/20 px-2.5 py-1 text-xs text-slate-200">

@@ -42,7 +42,7 @@ const pricingPackages: PricingPackageCard[] = [
     slug: "basic",
     price: 5999,
     delivery: "3-7 Days",
-    idealFor: "Best for growing local businesses that need a multi-page website with stronger trust signals.",
+    idealFor: "Best for growing businesses that need a multi-page website with stronger trust signals.",
     includes: [
       "Up to 3 Pages",
       "Mobile Responsive Design",
@@ -256,9 +256,9 @@ export default async function PricingPage() {
               {
                 key: "ph",
                 label: "PH Pricing",
-                eyebrow: "For Philippine Businesses",
+                eyebrow: "For the Philippine Market",
                 description:
-                  "Structured investment packages tailored for local businesses that need premium positioning, stronger inquiry flow, and realistic delivery timelines.",
+                  "Structured investment packages tailored for businesses operating in the Philippine market that need premium positioning, stronger inquiry flow, and realistic delivery timelines.",
                 packages: pricingPackages
               },
               {

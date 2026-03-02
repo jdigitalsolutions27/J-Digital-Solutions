@@ -38,7 +38,7 @@ export async function buildMetadata({
           alt: settings.brandName
         }
       ],
-      locale: "en_PH",
+      locale: "en_US",
       type: "website"
     },
     twitter: {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BadgeCheck, Building2, Rocket, ShieldCheck, Sparkles } from "lucide-react";
+import { BadgeCheck, Building2, MessageSquareQuote, Rocket, ShieldCheck, Sparkles } from "lucide-react";
 
 import { GlowBandSeparator } from "@/components/layout/dividers/GlowBandSeparator";
 import { SoftWaveSeparator } from "@/components/layout/dividers/SoftWaveSeparator";
@@ -20,7 +20,7 @@ export async function generateMetadata() {
   return buildMetadata({
     title: "About | J-Digital Solutions",
     description:
-      "Learn about J-Digital Solutions and our approach to building trust-heavy, conversion-focused websites for Philippine businesses.",
+      "Learn about J-Digital Solutions and our approach to building trust-heavy, conversion-focused websites for businesses worldwide.",
     path: "/about"
   });
 }
@@ -63,11 +63,31 @@ const pillars = [
   }
 ];
 
+const collaborationPrinciples = [
+  {
+    title: "Remote-First Workflow",
+    description: "Our delivery process is designed for smooth collaboration whether you are local, regional, or international."
+  },
+  {
+    title: "Market-Aware Messaging",
+    description: "We shape content and structure around your audience, offer, and industry context, not a fixed regional template."
+  },
+  {
+    title: "Clear Accountability",
+    description: "You always know what is being built, what is next, and what the expected outcome should be."
+  }
+];
+
 export default async function AboutPage() {
   const settings = await getSiteSettings();
   const testimonials = settings.testimonialsEnabled
     ? await db.testimonial.findMany({ where: { isPublished: true }, orderBy: { position: "asc" } }).catch(() => [])
     : [];
+  const testimonialMeta: Record<string, { region: string; focus: string }> = {
+    "Turner Build Group": { region: "North America", focus: "Construction" },
+    "VitalCore Health Clinic": { region: "Asia Pacific", focus: "Healthcare" },
+    "Bennett Commerce Studio": { region: "United Kingdom", focus: "E-Commerce" }
+  };
 
   return (
     <MarketingShell>
@@ -78,7 +98,7 @@ export default async function AboutPage() {
             Built for businesses that want <span className="text-gradient-keyword">structured growth</span>
           </h1>
           <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-200 sm:text-base">
-            We design and build trust-first websites that turn attention into organized inquiries for Philippine businesses.
+            We design and build trust-first websites that turn attention into organized inquiries for businesses worldwide.
           </p>
           <div className="mt-6">
             <Button asChild size="lg">
@@ -95,7 +115,7 @@ export default async function AboutPage() {
           <Reveal>
             <p className={typography.eyebrow}>Our Mission</p>
             <h2 className={`${typography.pageTitle} heading-underline mt-2`}>
-              Help local businesses look premium and convert with confidence
+              Help ambitious businesses look premium and convert with confidence
             </h2>
             <p className="mt-4 text-sm text-slate-300">
               We believe growth happens when design, structure, and messaging are aligned. Our mission is to deliver
@@ -171,12 +191,32 @@ export default async function AboutPage() {
         </div>
       </SectionWrapper>
 
+      <SectionWrapper variant="base" glow="soft" withTopDivider withBottomDivider id="collaboration">
+        <Reveal>
+          <SectionHeading
+            eyebrow="How We Work"
+            title="Built for remote collaboration with global clients"
+            description="The process stays structured whether we are working with a local founder, an overseas business owner, or a distributed team."
+          />
+        </Reveal>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {collaborationPrinciples.map((item) => (
+            <Card key={item.title}>
+              <CardContent className="space-y-3 p-6">
+                <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+                <p className="text-sm text-slate-300">{item.description}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </SectionWrapper>
+
       <SectionWrapper variant="accent" glow="soft" withTopDivider id="positioning">
         <Card className="border-cyan-300/30 bg-slate-900/55">
           <CardContent className="p-8 text-center sm:p-10">
             <p className={typography.eyebrow}>Positioning</p>
             <h2 className="mx-auto mt-3 max-w-3xl text-3xl font-bold text-white sm:text-4xl">
-              Built for businesses that want structured growth, not random digital activity
+              Philippines-based execution with a global standard for trust, conversion, and delivery
             </h2>
           </CardContent>
         </Card>
@@ -191,12 +231,28 @@ export default async function AboutPage() {
             {testimonials.map((item) => (
               <Card key={item.id}>
                 <CardContent className="space-y-3 p-6">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-cyan-100">
+                      <MessageSquareQuote className="h-3.5 w-3.5" />
+                      Client Feedback
+                    </span>
+                    {testimonialMeta[item.company]?.region ? (
+                      <span className="rounded-full border border-white/15 px-3 py-1 text-[11px] text-slate-300">
+                        {testimonialMeta[item.company]?.region}
+                      </span>
+                    ) : null}
+                  </div>
                   <p className="text-sm text-slate-200">&ldquo;{item.quote}&rdquo;</p>
                   <div>
                     <p className="font-semibold text-white">{item.name}</p>
                     <p className="text-xs text-slate-300">
                       {item.role}, {item.company}
                     </p>
+                    {testimonialMeta[item.company]?.focus ? (
+                      <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-cyan-200">
+                        {testimonialMeta[item.company]?.focus}
+                      </p>
+                    ) : null}
                   </div>
                 </CardContent>
               </Card>

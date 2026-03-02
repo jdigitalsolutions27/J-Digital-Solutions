@@ -1,20 +1,21 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { submitLeadAction } from "@/lib/actions/public";
-import { budgetRanges, contactMethods, industryOptions } from "@/lib/constants";
+import { budgetRanges, contactMethods, countryOptions, countryTimezoneMap, industryOptions, timezoneOptions } from "@/lib/constants";
 import { leadSchema } from "@/lib/validators";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
+import { AdaptiveSelect } from "@/components/ui/adaptive-select";
 import { Textarea } from "@/components/ui/textarea";
 
 type FormValues = z.infer<typeof leadSchema>;
@@ -35,7 +36,33 @@ export function ContactForm({ packageOptions }: { packageOptions: string[] }) {
     return Array.from(new Set(items));
   }, [defaultPackage, packageOptions]);
 
+  const countrySelectOptions = useMemo(
+    () => countryOptions.map((item) => ({ label: item, value: item })),
+    []
+  );
+  const timezoneSelectOptions = useMemo(
+    () => timezoneOptions.map((item) => ({ label: item, value: item })),
+    []
+  );
+  const industrySelectOptions = useMemo(
+    () => industryOptions.map((item) => ({ label: item, value: item })),
+    []
+  );
+  const packageSelectOptions = useMemo(
+    () => visiblePackageOptions.map((item) => ({ label: item, value: item })),
+    [visiblePackageOptions]
+  );
+  const budgetSelectOptions = useMemo(
+    () => budgetRanges.map((item) => ({ label: item, value: item })),
+    []
+  );
+  const contactMethodOptions = useMemo(
+    () => contactMethods.map((item) => ({ label: item, value: item })),
+    []
+  );
+
   const {
+    control,
     register,
     handleSubmit,
     reset,
@@ -49,6 +76,8 @@ export function ContactForm({ packageOptions }: { packageOptions: string[] }) {
       packageInterest: defaultPackage,
       preferredContactMethod: "Email",
       preferredContactValue: "",
+      country: "",
+      timezone: "",
       budgetRange: budgetRanges[1]
     }
   });
@@ -60,6 +89,19 @@ export function ContactForm({ packageOptions }: { packageOptions: string[] }) {
   useEffect(() => {
     setValue("packageInterest", defaultPackage);
   }, [defaultPackage, setValue]);
+
+  const selectedCountry = watch("country");
+  const selectedTimezone = watch("timezone");
+
+  useEffect(() => {
+    if (!selectedCountry) return;
+    const suggestedTimezone = countryTimezoneMap[selectedCountry as keyof typeof countryTimezoneMap];
+    if (!suggestedTimezone) return;
+
+    if (!selectedTimezone || selectedTimezone === "Flexible / Will coordinate later") {
+      setValue("timezone", suggestedTimezone, { shouldDirty: true });
+    }
+  }, [selectedCountry, selectedTimezone, setValue]);
 
   const preferredContactMethod = watch("preferredContactMethod");
   const preferredContactMeta = useMemo(() => {
@@ -100,6 +142,8 @@ export function ContactForm({ packageOptions }: { packageOptions: string[] }) {
       email: values.email.trim().toLowerCase(),
       mobileNumber: values.mobileNumber.trim(),
       businessName: values.businessName.trim().toLowerCase(),
+      country: (values.country ?? "").trim().toLowerCase(),
+      timezone: (values.timezone ?? "").trim().toLowerCase(),
       industry: values.industry.trim().toLowerCase(),
       packageInterest: values.packageInterest.trim().toLowerCase(),
       budgetRange: values.budgetRange.trim().toLowerCase(),
@@ -139,6 +183,8 @@ export function ContactForm({ packageOptions }: { packageOptions: string[] }) {
         email: "",
         mobileNumber: "",
         businessName: "",
+        country: "",
+        timezone: "",
         industry: "",
         packageInterest: defaultPackage,
         budgetRange: budgetRanges[1],
@@ -177,49 +223,108 @@ export function ContactForm({ packageOptions }: { packageOptions: string[] }) {
         </div>
 
         <div className="space-y-2">
+          <Label htmlFor="country">Country <span className="text-slate-400">(optional)</span></Label>
+          <Controller
+            control={control}
+            name="country"
+            render={({ field }) => (
+              <AdaptiveSelect
+                id="country"
+                value={field.value ?? ""}
+                onChange={field.onChange}
+                options={countrySelectOptions}
+                placeholder="Select country"
+              />
+            )}
+          />
+          {errors.country ? <p className="text-xs text-red-300">{errors.country.message}</p> : null}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="timezone">Timezone <span className="text-slate-400">(optional)</span></Label>
+          <Controller
+            control={control}
+            name="timezone"
+            render={({ field }) => (
+              <AdaptiveSelect
+                id="timezone"
+                value={field.value ?? ""}
+                onChange={field.onChange}
+                options={timezoneSelectOptions}
+                placeholder="Select timezone"
+              />
+            )}
+          />
+          {errors.timezone ? <p className="text-xs text-red-300">{errors.timezone.message}</p> : null}
+        </div>
+
+        <div className="space-y-2">
           <Label htmlFor="industry">Industry</Label>
-          <Select id="industry" {...register("industry")}>
-            <option value="">Select industry</option>
-            {industryOptions.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </Select>
+          <Controller
+            control={control}
+            name="industry"
+            render={({ field }) => (
+              <AdaptiveSelect
+                id="industry"
+                value={field.value ?? ""}
+                onChange={field.onChange}
+                options={industrySelectOptions}
+                placeholder="Select industry"
+              />
+            )}
+          />
           {errors.industry ? <p className="text-xs text-red-300">{errors.industry.message}</p> : null}
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="packageInterest">Package Interest</Label>
-          <Select id="packageInterest" {...register("packageInterest")}>
-            {visiblePackageOptions.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </Select>
+          <Controller
+            control={control}
+            name="packageInterest"
+            render={({ field }) => (
+              <AdaptiveSelect
+                id="packageInterest"
+                value={field.value ?? ""}
+                onChange={field.onChange}
+                options={packageSelectOptions}
+                placeholder="Select package"
+              />
+            )}
+          />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="budgetRange">Budget Range</Label>
-          <Select id="budgetRange" {...register("budgetRange")}>
-            {budgetRanges.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </Select>
+          <Controller
+            control={control}
+            name="budgetRange"
+            render={({ field }) => (
+              <AdaptiveSelect
+                id="budgetRange"
+                value={field.value ?? ""}
+                onChange={field.onChange}
+                options={budgetSelectOptions}
+                placeholder="Select budget range"
+              />
+            )}
+          />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="preferredContactMethod">Preferred Contact Method</Label>
-          <Select id="preferredContactMethod" {...register("preferredContactMethod")}>
-            {contactMethods.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </Select>
+          <Controller
+            control={control}
+            name="preferredContactMethod"
+            render={({ field }) => (
+              <AdaptiveSelect
+                id="preferredContactMethod"
+                value={field.value ?? ""}
+                onChange={field.onChange}
+                options={contactMethodOptions}
+                placeholder="Select contact method"
+              />
+            )}
+          />
         </div>
 
         <div className="space-y-2">
@@ -240,7 +345,13 @@ export function ContactForm({ packageOptions }: { packageOptions: string[] }) {
           <Button type="submit" size="lg" className="w-full sm:w-auto" disabled={pending}>
             {pending ? "Submitting..." : "Request Free Consultation"}
           </Button>
-          <p className="mt-3 text-xs text-slate-300">No spam. Your details stay private.</p>
+          <p className="mt-3 text-xs text-slate-300">
+            No spam. Your details stay private. See our{" "}
+            <Link href="/privacy-policy" className="text-cyan-200 underline underline-offset-2 hover:text-white">
+              Privacy Policy
+            </Link>
+            .
+          </p>
           <p className="mt-1 text-xs text-slate-300">Typical response time: within 24 hours.</p>
           {submitted ? (
             <p className="mt-3 text-sm text-emerald-300" role="status" aria-live="polite">

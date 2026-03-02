@@ -42,7 +42,7 @@ model SiteSettings {
   heroSubheadline      String
   primaryCtaLabel      String   @default("Book Free Consultation")
   primaryCtaLink       String   @default("/contact?package=startup")
-  secondaryCtaLabel    String   @default("View Portfolio")
+  secondaryCtaLabel    String   @default("View Projects")
   secondaryCtaLink     String   @default("/portfolio")
   phone                String?
   email                String?
@@ -171,6 +171,8 @@ model Lead {
   email                  String
   mobileNumber           String
   businessName           String
+  country                String?
+  timezone               String?
   industry               String
   packageInterest        String
   budgetRange            String

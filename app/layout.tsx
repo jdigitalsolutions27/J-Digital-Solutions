@@ -29,16 +29,16 @@ export const metadata: Metadata = {
     default: "J-Digital Solutions",
     template: "%s | J-Digital Solutions"
   },
-  description: "Premium websites and growth systems for Philippine businesses.",
+  description: "Premium websites and growth systems for service businesses worldwide.",
   alternates: {
     canonical: "/"
   },
   openGraph: {
     type: "website",
-    locale: "en_PH",
+    locale: "en_US",
     siteName: "J-Digital Solutions",
     title: "J-Digital Solutions",
-    description: "Premium websites and growth systems for Philippine businesses.",
+    description: "Premium websites and growth systems for service businesses worldwide.",
     url: siteUrl,
     images: [
       {
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "J-Digital Solutions",
-    description: "Premium websites and growth systems for Philippine businesses.",
+    description: "Premium websites and growth systems for service businesses worldwide.",
     images: ["/og-image.svg"]
   },
   icons: {

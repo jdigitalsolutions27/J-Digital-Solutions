@@ -12,6 +12,11 @@ const quickLinks = [
   { label: "Contact", href: "/contact" }
 ] as const;
 
+const policyLinks = [
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Service", href: "/terms-of-service" }
+] as const;
+
 export function MarketingFooter({
   brandName,
   email,
@@ -39,7 +44,7 @@ export function MarketingFooter({
     <footer className="relative border-t border-white/10 bg-slate-950/70">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/45 to-transparent" />
 
-      <div className="container-xl grid gap-10 py-14 md:grid-cols-[1.4fr,1fr,1fr]">
+      <div className="container-xl grid gap-10 py-14 md:grid-cols-[1.2fr,1fr,1fr,1fr]">
         <div className="space-y-5">
           <div className="flex items-center gap-3">
             <BrandLogo alt={brandName} width={120} height={44} imageClassName="h-10 w-auto" />
@@ -50,7 +55,7 @@ export function MarketingFooter({
           </div>
 
           <p className="max-w-xl text-sm text-slate-300">
-            Premium websites and growth-focused digital systems for Philippine businesses that want consistent, qualified inquiries.
+            Premium websites, landing pages, and conversion-focused digital systems for service businesses worldwide, delivered with structured execution and remote-ready collaboration.
           </p>
 
           <Link
@@ -65,6 +70,20 @@ export function MarketingFooter({
           <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-200">Quick Links</h3>
           <ul className="space-y-2 text-sm text-slate-300">
             {quickLinks.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="inline-flex min-h-11 items-center gap-2 transition hover:text-white">
+                  <span className="h-1 w-1 rounded-full bg-blue-200/70" />
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-200">Policies</h3>
+          <ul className="space-y-2 text-sm text-slate-300">
+            {policyLinks.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className="inline-flex min-h-11 items-center gap-2 transition hover:text-white">
                   <span className="h-1 w-1 rounded-full bg-blue-200/70" />

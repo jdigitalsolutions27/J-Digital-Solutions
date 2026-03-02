@@ -6,12 +6,12 @@ import { db } from "@/lib/db";
 const fallbackSiteSettings: SiteSettings = {
   id: 1,
   brandName: "J-Digital Solutions",
-  heroHeadline: "Turn Your Website Into a 24/7 Client-Generating System",
+  heroHeadline: "Premium Websites Built for Trust, Leads, and Growth",
   heroSubheadline:
-    "We design and build premium websites for Philippine businesses that improve trust, capture leads, and drive consistent growth.",
+    "We design and build conversion-focused websites for growth-driven businesses worldwide, combining premium design, sharp positioning, and structured execution.",
   primaryCtaLabel: "Book Free Consultation",
   primaryCtaLink: "/contact?package=startup",
-  secondaryCtaLabel: "View Portfolio",
+  secondaryCtaLabel: "View Projects",
   secondaryCtaLink: "/portfolio",
   phone: "0927 495 0610",
   email: "jdigitalsolutions27@gmail.com",
@@ -24,19 +24,42 @@ const fallbackSiteSettings: SiteSettings = {
   facebookUrl: "https://www.facebook.com/jdigitalsolutions",
   instagramUrl: null,
   linkedinUrl: null,
-  seoDefaultTitle: "J-Digital Solutions | Premium Websites for Philippine Businesses",
+  seoDefaultTitle: "J-Digital Solutions | Premium Websites for Growth-Driven Businesses",
   seoDefaultDescription:
-    "J-Digital Solutions creates conversion-focused websites, landing pages, and growth systems for Philippine SMEs and local brands.",
+    "J-Digital Solutions creates premium websites, landing pages, and growth systems for service businesses worldwide.",
   highlightPackageSlug: "startup",
   testimonialsEnabled: true,
   createdAt: new Date(),
   updatedAt: new Date()
 };
 
+function normalizeLegacySettings(settings: SiteSettings): SiteSettings {
+  const legacyHeroHeadline = "Turn Your Website Into a 24/7 Client-Generating System";
+  const legacyHeroSubheadline =
+    "We design and build premium websites for Philippine businesses that improve trust, capture leads, and drive consistent growth.";
+  const legacySeoTitle = "J-Digital Solutions | Premium Websites for Philippine Businesses";
+  const legacySeoDescription =
+    "J-Digital Solutions creates conversion-focused websites, landing pages, and growth systems for Philippine SMEs and local brands.";
+  const legacySecondaryCtaLabel = "View Portfolio";
+
+  return {
+    ...settings,
+    heroHeadline: settings.heroHeadline === legacyHeroHeadline ? fallbackSiteSettings.heroHeadline : settings.heroHeadline,
+    heroSubheadline: settings.heroSubheadline === legacyHeroSubheadline ? fallbackSiteSettings.heroSubheadline : settings.heroSubheadline,
+    secondaryCtaLabel:
+      settings.secondaryCtaLabel === legacySecondaryCtaLabel ? fallbackSiteSettings.secondaryCtaLabel : settings.secondaryCtaLabel,
+    seoDefaultTitle: settings.seoDefaultTitle === legacySeoTitle ? fallbackSiteSettings.seoDefaultTitle : settings.seoDefaultTitle,
+    seoDefaultDescription:
+      settings.seoDefaultDescription === legacySeoDescription
+        ? fallbackSiteSettings.seoDefaultDescription
+        : settings.seoDefaultDescription
+  };
+}
+
 export const getSiteSettings = cache(async () => {
   try {
     const settings = await db.siteSettings.findUnique({ where: { id: 1 } });
-    if (settings) return settings;
+    if (settings) return normalizeLegacySettings(settings);
 
     return db.siteSettings.create({
       data: {

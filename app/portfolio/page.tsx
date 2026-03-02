@@ -18,7 +18,7 @@ import { typography } from "@/lib/typography";
 export async function generateMetadata() {
   return buildMetadata({
     title: "Projects | J-Digital Solutions",
-    description: "See sample and client website projects built by J-Digital Solutions across key industries.",
+    description: "Review premium website case studies and project previews built by J-Digital Solutions for service businesses across multiple industries and markets.",
     path: "/portfolio"
   });
 }
@@ -36,6 +36,19 @@ export default async function PortfolioPage() {
     .catch(() => []);
 
   const featured = projects[0];
+  const featuredIndustry = featured?.industry.toLowerCase();
+  const featuredOutcome =
+    featuredIndustry === "construction"
+      ? "Premium service positioning built to improve quote quality and trust."
+      : featuredIndustry === "healthcare"
+        ? "Trust-led mobile experience built to improve first-contact confidence."
+        : featuredIndustry === "e-commerce" || featuredIndustry === "ecommerce"
+          ? "Conversion-ready presentation built to improve product confidence."
+          : featuredIndustry === "consulting"
+            ? "Authority-focused structure built to improve consultation demand."
+            : featuredIndustry === "real estate"
+              ? "Premium listing flow built to improve inquiry quality."
+              : "Conversion-focused structure built to improve trust and lead quality.";
 
   return (
     <MarketingShell>
@@ -44,7 +57,7 @@ export default async function PortfolioPage() {
           <p className={typography.eyebrow}>Projects</p>
           <h1 className={`mt-3 ${typography.heroTitle}`}>Web projects that build trust and drive inquiries</h1>
           <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-200 sm:text-base">
-            Selected builds for construction, healthcare, consulting, real estate, and e-commerce businesses.
+            Selected case studies and sample builds for construction, healthcare, consulting, real estate, and e-commerce businesses across multiple markets.
           </p>
         </Reveal>
       </SectionWrapper>
@@ -61,9 +74,14 @@ export default async function PortfolioPage() {
           <div className="mt-8 grid gap-6 lg:grid-cols-[1.25fr,1fr]">
             <Card className="overflow-hidden">
               <Link href={`/portfolio/${featured.slug}`} className="group relative block h-72 sm:h-[420px]" aria-label={`Open ${featured.title} case study`}>
+                <div className="absolute inset-x-0 top-0 z-10 flex h-8 items-center gap-1.5 border-b border-white/10 bg-slate-950/55 px-4 backdrop-blur">
+                  <span className="h-2.5 w-2.5 rounded-full bg-rose-300/80" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-amber-300/80" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-300/80" />
+                </div>
                 <div className="absolute inset-0 bg-[linear-gradient(145deg,rgba(56,189,248,0.12),rgba(255,255,255,0.04),rgba(96,165,250,0.12))]" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(186,230,253,0.24),transparent_48%)]" />
-                <Image src={featured.coverImage} alt={featured.title} fill className="object-contain object-top p-2" />
+                <Image src={featured.coverImage} alt={featured.title} fill className="object-contain object-top px-3 pb-3 pt-10" />
                 <span className="absolute bottom-3 right-3 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs text-white backdrop-blur-sm transition group-hover:bg-white/20">
                   View Case
                 </span>
@@ -78,6 +96,7 @@ export default async function PortfolioPage() {
                 <p className="text-sm text-slate-300">
                   Premium website execution with conversion-focused sections and trust-heavy messaging architecture.
                 </p>
+                <p className="text-sm text-cyan-100">{featuredOutcome}</p>
                 <div className="flex flex-wrap gap-2">
                   {featured.tags.slice(0, 5).map((tag) => (
                     <span key={tag} className="rounded-full border border-white/20 px-3 py-1 text-xs text-slate-200">

@@ -76,7 +76,7 @@ export default async function ProcessPage() {
         <p className={typography.eyebrow}>{`J-Digital Growth Framework${"\u2122"}`}</p>
         <h1 className={`mt-3 ${typography.heroTitle}`}>A structured process with clear milestones</h1>
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-200 sm:text-base">
-          Every phase has defined outputs, timeline visibility, and conversion intent.
+          Every phase is structured with defined outputs, clear approval points, and delivery visibility, whether your team is local, remote, or distributed across regions.
         </p>
       </SectionWrapper>
 
@@ -120,7 +120,7 @@ export default async function ProcessPage() {
             <CardContent className="p-6 sm:p-8">
               <h3 className="text-xl font-semibold text-white">Need a suggested timeline for your business?</h3>
               <p className="mt-3 text-sm text-slate-200">
-                We can map your project into phases and identify the fastest realistic launch path.
+                We can map your project into phases, identify the fastest realistic launch path, and align around your timezone and decision flow.
               </p>
               <Button asChild className="mt-5">
                 <Link href="/contact?package=startup">Book Free Consultation</Link>

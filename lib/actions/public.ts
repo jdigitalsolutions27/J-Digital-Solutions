@@ -32,6 +32,8 @@ export async function submitLeadAction(input: unknown) {
   const lead = await db.lead.create({
     data: {
       ...parsed.data,
+      country: parsed.data.country || null,
+      timezone: parsed.data.timezone || null,
       leadType: "CONSULTATION"
     }
   });
