@@ -118,38 +118,40 @@ export function HomePortfolioShowcase({ projects }: { projects: HomeProject[] })
 
   return (
     <div>
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportDefaults}
-        variants={staggerContainer}
-        className="mb-8 flex flex-wrap gap-2"
-      >
-        {filters.map((filter) => (
-          <motion.button
-            key={filter}
-            type="button"
-            variants={fadeUp}
-            onClick={() => setActiveFilter(filter)}
-            aria-pressed={activeFilter === filter}
-            className={cn(
-              "relative rounded-full border px-4 py-2 text-sm transition-all duration-200",
-              activeFilter === filter
-                ? "border-cyan-300/55 bg-cyan-400/10 text-white"
-                : "border-white/20 bg-white/[0.03] text-slate-300 hover:bg-white/[0.08]"
-            )}
-          >
-            {activeFilter === filter ? (
-              <motion.span
-                layoutId="portfolio-tab-underline"
-                className="absolute inset-x-3 bottom-1 h-[2px] rounded-full bg-cyan-300"
-                transition={{ type: "spring", stiffness: 260, damping: 24 }}
-              />
-            ) : null}
-            <span className="relative z-10">{filter}</span>
-          </motion.button>
-        ))}
-      </motion.div>
+      <div className="premium-shell mb-8 p-3 sm:p-4">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportDefaults}
+          variants={staggerContainer}
+          className="flex flex-wrap gap-2"
+        >
+          {filters.map((filter) => (
+            <motion.button
+              key={filter}
+              type="button"
+              variants={fadeUp}
+              onClick={() => setActiveFilter(filter)}
+              aria-pressed={activeFilter === filter}
+              className={cn(
+                "relative rounded-full border px-4 py-2 text-sm transition-all duration-200",
+                activeFilter === filter
+                  ? "border-cyan-300/55 bg-cyan-400/10 text-white"
+                  : "border-white/20 bg-white/[0.03] text-slate-300 hover:bg-white/[0.08]"
+              )}
+            >
+              {activeFilter === filter ? (
+                <motion.span
+                  layoutId="portfolio-tab-underline"
+                  className="absolute inset-x-3 bottom-1 h-[2px] rounded-full bg-cyan-300"
+                  transition={{ type: "spring", stiffness: 260, damping: 24 }}
+                />
+              ) : null}
+              <span className="relative z-10">{filter}</span>
+            </motion.button>
+          ))}
+        </motion.div>
+      </div>
 
       <p className="mb-6 text-sm text-slate-300">
         Showing {filtered.length} {filtered.length === 1 ? "project" : "projects"} in {activeFilter}.

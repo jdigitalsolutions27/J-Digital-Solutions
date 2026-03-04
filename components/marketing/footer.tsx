@@ -41,8 +41,10 @@ export function MarketingFooter({
   ].filter(Boolean) as Array<{ href: string; label: string; icon: typeof Facebook }>;
 
   return (
-    <footer className="relative border-t border-white/10 bg-slate-950/70">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-slate-950/70">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/45 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(56,189,248,0.12),transparent_30%),radial-gradient(circle_at_85%_35%,rgba(37,99,235,0.12),transparent_26%)]" />
+      <div className="pointer-events-none absolute inset-0 noise-overlay opacity-20" />
 
       <div className="container-xl grid gap-10 py-14 md:grid-cols-[1.2fr,1fr,1fr,1fr]">
         <div className="space-y-5">
@@ -50,13 +52,19 @@ export function MarketingFooter({
             <BrandLogo alt={brandName} width={120} height={44} imageClassName="h-10 w-auto" />
             <div>
               <p className="font-display text-xl font-bold text-white">{brandName}</p>
-              <p className="text-xs uppercase tracking-[0.2em] text-blue-200">Web Growth Studio</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-blue-200">Premium Digital Systems</p>
             </div>
           </div>
 
           <p className="max-w-xl text-sm text-slate-300">
             Premium websites, landing pages, and conversion-focused digital systems for service businesses worldwide, delivered with structured execution and remote-ready collaboration.
           </p>
+
+          <div className="flex flex-wrap gap-2">
+            <span className="premium-chip">Web Development</span>
+            <span className="premium-chip">Automation Systems</span>
+            <span className="premium-chip">Digital Marketing</span>
+          </div>
 
           <Link
             href="/contact?package=startup"

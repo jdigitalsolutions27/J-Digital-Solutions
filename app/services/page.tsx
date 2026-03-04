@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Gauge, Layers3, Megaphone, Workflow } from "lucide-react";
 
 import { GlowBandSeparator } from "@/components/layout/dividers/GlowBandSeparator";
+import { PageHero } from "@/components/marketing/page-hero";
 import { SectionWrapper } from "@/components/layout/SectionWrapper";
 import { MarketingShell } from "@/components/marketing/shell";
 import { SectionHeading } from "@/components/marketing/section-heading";
@@ -72,20 +73,35 @@ export default async function ServicesPage() {
   return (
     <MarketingShell>
       <SectionWrapper variant="accent" glow="hero" withBottomDivider>
-        <Reveal>
-          <p className={typography.eyebrow}>Services</p>
-          <h1 className={`mt-3 ${typography.heroTitle}`}>Execution systems built for credibility and growth</h1>
-          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-200 sm:text-base">
-            Every service is designed to strengthen positioning, improve conversion clarity, and support a more reliable digital sales process.
-          </p>
-          <div className="mt-6">
-            <Button asChild size="lg">
-              <Link href="/contact?package=startup">
-                Request Consultation <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </Reveal>
+        <PageHero
+          eyebrow="Services"
+          title="Execution systems built for credibility and growth"
+          description="Every service is designed to strengthen positioning, improve conversion clarity, and support a more reliable digital sales process."
+          ctaLabel="Request Consultation"
+          ctaHref="/contact?package=startup"
+          signals={[
+            { label: "Core", value: "Web" },
+            { label: "Expansion", value: "Automation" },
+            { label: "Growth", value: "Campaign-ready" }
+          ]}
+          features={[
+            {
+              icon: Layers3,
+              title: "Premium websites",
+              description: "Brand-led builds that improve trust, clarity, and first-contact confidence."
+            },
+            {
+              icon: Workflow,
+              title: "Automation systems",
+              description: "Operational flows that make inquiries, bookings, and internal updates more efficient."
+            },
+            {
+              icon: Megaphone,
+              title: "Marketing readiness",
+              description: "Landing pages and performance structure aligned to paid traffic and lead generation."
+            }
+          ]}
+        />
       </SectionWrapper>
 
       <SectionWrapper variant="base" glow="soft" withTopDivider>

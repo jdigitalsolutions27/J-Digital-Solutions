@@ -53,6 +53,7 @@ Create `.env.local` from `.env.example`.
 Required keys:
 ```env
 DATABASE_URL=
+DIRECT_URL=
 NEXTAUTH_URL=
 NEXTAUTH_SECRET=
 NEXT_PUBLIC_SITE_URL=
@@ -77,6 +78,12 @@ Connection string examples are included in `.env.example` for:
 - Supabase Postgres
 - Neon Postgres
 
+Recommended for Supabase:
+- `DATABASE_URL` = Session Pooler URI
+- `DIRECT_URL` = Direct Connection URI
+
+This matters on Vercel because the direct Supabase database host can time out from IPv4-only build/runtime environments, while the Session Pooler URI is designed for that use case.
+
 ## 3) Database Setup
 Use Prisma migrations (recommended):
 ```bash
@@ -87,6 +94,10 @@ Or push schema directly:
 ```bash
 npx prisma db push
 ```
+
+For Supabase:
+- use `DATABASE_URL` for app runtime and Vercel builds
+- use `DIRECT_URL` for Prisma migrations / schema push operations
 
 Generate Prisma client:
 ```bash
@@ -172,6 +183,9 @@ If `RESEND_API_KEY` is empty, contact submissions are still stored in DB but ema
 1. Push this repo to GitHub.
 2. Import project in Vercel.
 3. Add all environment variables from `.env.example` in Vercel project settings.
+   - For Supabase, set:
+     - `DATABASE_URL` to the `Session pooler` URI
+     - `DIRECT_URL` to the `Direct connection` URI
 4. Set `NEXTAUTH_URL` to your production domain.
 5. Set `NEXT_PUBLIC_SITE_URL` to your production domain (used for canonical/SEO URLs).
 5. Deploy.
@@ -182,6 +196,7 @@ After deployment:
 
 ## Deployment Checklist
 - Confirm all env vars are set in Vercel (including Supabase/Resend keys).
+- If using Supabase, confirm `DATABASE_URL` is the Session Pooler URI, not only the direct `db.<project-ref>.supabase.co` host.
 - Run `npm run lint` locally with production env values.
 - Run `npm run build` locally before deploying.
 - Run `npx prisma migrate deploy` (or `npx prisma db push`) against production DB.

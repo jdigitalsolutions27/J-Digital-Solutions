@@ -22,6 +22,7 @@ export function SectionHeading({
         <p className={typography.eyebrow}>{eyebrow}</p>
       ) : null}
       <h2 className={cn(typography.sectionTitle, titleClassName)}>{title}</h2>
+      <div className="mx-auto h-px w-24 bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent" />
       {description ? <p className={typography.sectionLead}>{description}</p> : null}
     </div>
   );

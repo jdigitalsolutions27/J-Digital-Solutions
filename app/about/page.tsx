@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { BadgeCheck, Building2, MessageSquareQuote, Rocket, ShieldCheck, Sparkles } from "lucide-react";
+import { BadgeCheck, Building2, Globe2, MessageSquareQuote, Rocket, ShieldCheck, Sparkles, Workflow } from "lucide-react";
 
 import { GlowBandSeparator } from "@/components/layout/dividers/GlowBandSeparator";
 import { SoftWaveSeparator } from "@/components/layout/dividers/SoftWaveSeparator";
+import { PageHero } from "@/components/marketing/page-hero";
 import { SectionWrapper } from "@/components/layout/SectionWrapper";
 import { MarketingShell } from "@/components/marketing/shell";
 import { SectionHeading } from "@/components/marketing/section-heading";
@@ -94,20 +95,35 @@ export default async function AboutPage() {
   return (
     <MarketingShell>
       <SectionWrapper variant="accent" glow="hero" withBottomDivider>
-        <Reveal>
-          <p className={typography.eyebrow}>About J-Digital</p>
-          <h1 className={`mt-3 ${typography.heroTitle}`}>
-            Built for businesses that want <span className="text-gradient-keyword">structured growth</span>
-          </h1>
-          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-200 sm:text-base">
-            We design and build trust-first websites that turn attention into organized inquiries for businesses worldwide.
-          </p>
-          <div className="mt-6">
-            <Button asChild size="lg">
-              <Link href="/contact?package=startup">Book Free Consultation</Link>
-            </Button>
-          </div>
-        </Reveal>
+        <PageHero
+          eyebrow="About J-Digital"
+          title="Built for businesses that want structured growth"
+          description="We design and build trust-first websites that turn attention into organized inquiries for businesses worldwide."
+          ctaLabel="Book Free Consultation"
+          ctaHref="/contact?package=startup"
+          signals={[
+            { label: "Approach", value: "Trust-led" },
+            { label: "Workflow", value: "Remote-ready" },
+            { label: "Delivery", value: "Milestone-based" }
+          ]}
+          features={[
+            {
+              icon: Globe2,
+              title: "Global collaboration",
+              description: "A clear delivery rhythm for clients across regions, timezones, and distributed teams."
+            },
+            {
+              icon: ShieldCheck,
+              title: "Strategic trust design",
+              description: "Web experiences shaped to reduce hesitation and improve inquiry confidence."
+            },
+            {
+              icon: Workflow,
+              title: "Structured execution",
+              description: "Scope, design, build, review, and launch handled with visible milestones and accountability."
+            }
+          ]}
+        />
       </SectionWrapper>
 
       <SoftWaveSeparator />

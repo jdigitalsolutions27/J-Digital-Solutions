@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CalendarClock, ClipboardList, Globe2, Mail, MapPin, MessageCircle, PhoneCall, ShieldCheck } from "lucide-react";
 
 import { GlowBandSeparator } from "@/components/layout/dividers/GlowBandSeparator";
+import { PageHero } from "@/components/marketing/page-hero";
 import { SectionWrapper } from "@/components/layout/SectionWrapper";
 import { ContactForm } from "@/components/marketing/contact-form";
 import { MarketingShell } from "@/components/marketing/shell";
@@ -74,11 +75,33 @@ export default async function ContactPage() {
   return (
     <MarketingShell>
       <SectionWrapper variant="accent" glow="hero" withBottomDivider>
-        <p className={typography.eyebrow}>Contact</p>
-        <h1 className={`mt-3 ${typography.heroTitle}`}>Request a free consultation</h1>
-        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-200 sm:text-base">
-          Tell us your goals and we will get back within 24 hours with a clear next-step plan, wherever your business is based.
-        </p>
+        <PageHero
+          eyebrow="Contact"
+          title="Request a free consultation"
+          description="Tell us your goals and we will get back within 24 hours with a clear next-step plan, wherever your business is based."
+          signals={[
+            { label: "Reply Time", value: "<24 Hours" },
+            { label: "Format", value: "Async or Call" },
+            { label: "Coverage", value: "Worldwide" }
+          ]}
+          features={[
+            {
+              icon: Globe2,
+              title: "Global client ready",
+              description: "Timezone-friendly communication and remote onboarding built for cross-market projects."
+            },
+            {
+              icon: ClipboardList,
+              title: "Clear next steps",
+              description: "Every inquiry is reviewed with a practical recommendation, not a generic reply."
+            },
+            {
+              icon: ShieldCheck,
+              title: "Structured intake",
+              description: "The form collects the details needed to respond with a useful, focused plan."
+            }
+          ]}
+        />
       </SectionWrapper>
 
       <SectionWrapper variant="raised" glow="soft" withTopDivider>

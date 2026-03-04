@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Clock3, Eye, Workflow } from "lucide-react";
 
 import { GlowBandSeparator } from "@/components/layout/dividers/GlowBandSeparator";
+import { PageHero } from "@/components/marketing/page-hero";
 import { SectionWrapper } from "@/components/layout/SectionWrapper";
 import { MarketingShell } from "@/components/marketing/shell";
 import { ProcessScrollSpy } from "@/components/marketing/process-scrollspy";
@@ -75,11 +76,33 @@ export default async function ProcessPage() {
   return (
     <MarketingShell>
       <SectionWrapper variant="accent" glow="hero" withBottomDivider>
-        <p className={typography.eyebrow}>{`J-Digital Growth Framework${"\u2122"}`}</p>
-        <h1 className={`mt-3 ${typography.heroTitle}`}>A structured process with clear milestones</h1>
-        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-200 sm:text-base">
-          Every phase is structured with defined outputs, clear approval points, and delivery visibility, whether your team is local, remote, or distributed across regions.
-        </p>
+        <PageHero
+          eyebrow={`J-Digital Growth Framework${"\u2122"}`}
+          title="A structured process with clear milestones"
+          description="Every phase is structured with defined outputs, clear approval points, and delivery visibility, whether your team is local, remote, or distributed across regions."
+          signals={[
+            { label: "Visibility", value: "High" },
+            { label: "Reviews", value: "Clear" },
+            { label: "Launch", value: "Guided" }
+          ]}
+          features={[
+            {
+              icon: Workflow,
+              title: "Milestone-driven delivery",
+              description: "Each step has a defined purpose, expected output, and approval rhythm."
+            },
+            {
+              icon: Clock3,
+              title: "Realistic timelines",
+              description: "Delivery windows are built around practical execution, not inflated promises."
+            },
+            {
+              icon: Eye,
+              title: "Transparent progress",
+              description: "You can see what is happening, what is done, and what is next."
+            }
+          ]}
+        />
       </SectionWrapper>
 
       <SectionWrapper variant="raised" glow="soft" withTopDivider>

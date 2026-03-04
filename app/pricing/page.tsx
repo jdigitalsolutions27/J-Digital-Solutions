@@ -1,4 +1,5 @@
 import { GlowBandSeparator } from "@/components/layout/dividers/GlowBandSeparator";
+import { PageHero } from "@/components/marketing/page-hero";
 import { PricingMarketSwitcher } from "@/components/marketing/pricing-market-switcher";
 import { SectionWrapper } from "@/components/layout/SectionWrapper";
 import { PremiumFaqAccordion } from "@/components/marketing/premium-faq-accordion";
@@ -10,7 +11,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/lib/db";
 import { buildMetadata } from "@/lib/metadata";
-import { typography } from "@/lib/typography";
+import { BadgeCheck, Globe2, WalletCards, Workflow } from "lucide-react";
 
 export async function generateMetadata() {
   return buildMetadata({
@@ -233,13 +234,33 @@ export default async function PricingPage() {
   return (
     <MarketingShell>
       <SectionWrapper variant="accent" glow="hero" withBottomDivider>
-        <Reveal>
-          <p className={typography.eyebrow}>Pricing Packages</p>
-          <h1 className={`mt-3 ${typography.heroTitle}`}>Transparent Packages for Every Growth Stage</h1>
-          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-200 sm:text-base">
-            Investment-focused website solutions with clear deliverables and realistic timelines.
-          </p>
-        </Reveal>
+        <PageHero
+          eyebrow="Pricing Packages"
+          title="Transparent Packages for Every Growth Stage"
+          description="Investment-focused website solutions with clear deliverables and realistic timelines."
+          signals={[
+            { label: "Pricing", value: "Transparent" },
+            { label: "Markets", value: "PH + Global" },
+            { label: "Approach", value: "Growth-led" }
+          ]}
+          features={[
+            {
+              icon: WalletCards,
+              title: "Clear investment framing",
+              description: "Packages are structured around outcomes, scope, and practical delivery windows."
+            },
+            {
+              icon: Globe2,
+              title: "Dual-market pricing",
+              description: "Visitors can compare Philippine and international offers without confusion."
+            },
+            {
+              icon: BadgeCheck,
+              title: "Defined inclusions",
+              description: "Every package clearly outlines what is included, what is complimentary, and the fit."
+            }
+          ]}
+        />
       </SectionWrapper>
 
       <GlowBandSeparator />

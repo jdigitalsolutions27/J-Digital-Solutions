@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Globe2, Layers3, MonitorSmartphone, Sparkles } from "lucide-react";
 
 import { GlowBandSeparator } from "@/components/layout/dividers/GlowBandSeparator";
+import { PageHero } from "@/components/marketing/page-hero";
 import { SectionWrapper } from "@/components/layout/SectionWrapper";
 import { MarketingShell } from "@/components/marketing/shell";
 import { PortfolioMasonry } from "@/components/marketing/portfolio-masonry";
@@ -55,13 +56,33 @@ export default async function PortfolioPage() {
   return (
     <MarketingShell>
       <SectionWrapper variant="accent" glow="hero" withBottomDivider>
-        <Reveal>
-          <p className={typography.eyebrow}>Projects</p>
-          <h1 className={`mt-3 ${typography.heroTitle}`}>Web projects that build trust and drive inquiries</h1>
-          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-200 sm:text-base">
-            Selected case studies and sample builds for construction, healthcare, consulting, real estate, and e-commerce businesses across multiple markets.
-          </p>
-        </Reveal>
+        <PageHero
+          eyebrow="Projects"
+          title="Web projects that build trust and drive inquiries"
+          description="Selected case studies and sample builds for construction, healthcare, consulting, real estate, and e-commerce businesses across multiple markets."
+          signals={[
+            { label: "Focus", value: "Proof" },
+            { label: "Format", value: "Case-led" },
+            { label: "Industries", value: "Multi-sector" }
+          ]}
+          features={[
+            {
+              icon: MonitorSmartphone,
+              title: "Premium presentation",
+              description: "Screenshots and structures designed to feel polished, modern, and commercially credible."
+            },
+            {
+              icon: Layers3,
+              title: "Strategic positioning",
+              description: "Each build demonstrates how design and messaging work together to support conversion."
+            },
+            {
+              icon: Globe2,
+              title: "Cross-market relevance",
+              description: "Projects are structured to resonate with businesses serving local, regional, and international buyers."
+            }
+          ]}
+        />
       </SectionWrapper>
 
       {featured ? (

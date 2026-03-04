@@ -14,17 +14,24 @@ export function PageBackground({
 }) {
   return (
     <div className={cn("relative isolate overflow-hidden", className)}>
-      <div className="pointer-events-none absolute inset-0 -z-40 bg-[#061226]" />
-      <div className="pointer-events-none absolute inset-0 -z-30 bg-[linear-gradient(180deg,#061226_0%,#071a33_48%,#061226_100%)]" />
-      <div className="pointer-events-none absolute left-1/2 top-[-280px] -z-20 h-[620px] w-[1200px] -translate-x-1/2 bg-[radial-gradient(circle,rgba(56,189,248,0.16),transparent_70%)] blur-3xl" />
-      <div className="pointer-events-none absolute bottom-[-320px] left-1/2 -z-20 h-[620px] w-[1000px] -translate-x-1/2 bg-[radial-gradient(circle,rgba(37,99,235,0.14),transparent_74%)] blur-3xl" />
-      <div className="pointer-events-none absolute inset-0 -z-20 hidden opacity-35 lg:block">
+      <div className="pointer-events-none absolute inset-0 -z-50 bg-[#04101f]" />
+      <div className="pointer-events-none absolute inset-0 -z-40 bg-[linear-gradient(180deg,#04101f_0%,#061226_34%,#071a33_52%,#05111f_100%)]" />
+      <div className="pointer-events-none absolute inset-0 -z-40 opacity-70">
+        <div className="grid-fade absolute inset-0" />
+      </div>
+      <div className="pointer-events-none absolute inset-0 -z-30 noise-overlay" />
+      <div className="pointer-events-none absolute left-[18%] top-[-280px] -z-20 h-[680px] w-[680px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.14),transparent_68%)] blur-3xl" />
+      <div className="pointer-events-none absolute right-[-6%] top-[8%] -z-20 h-[520px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.18),transparent_66%)] blur-3xl" />
+      <div className="pointer-events-none absolute bottom-[-320px] left-1/2 -z-20 h-[680px] w-[1040px] -translate-x-1/2 bg-[radial-gradient(circle,rgba(14,165,233,0.16),transparent_72%)] blur-3xl" />
+      <div className="pointer-events-none absolute inset-x-[8%] top-24 -z-20 hidden h-px section-beam lg:block" />
+      <div className="pointer-events-none absolute inset-0 -z-20 hero-vignette" />
+      <div className="pointer-events-none absolute inset-0 -z-10 hidden opacity-40 lg:block">
         <div className="aurora-layer aurora-layer-a aurora-drift-a" />
         <div className="aurora-layer aurora-layer-b aurora-drift-b" />
         <div className="aurora-layer aurora-layer-c aurora-drift-c" />
       </div>
 
-      {withBrandDNA ? <BrandDNA className="-z-10 opacity-70" /> : null}
+      {withBrandDNA ? <BrandDNA animated intensity="soft" className="-z-10 opacity-75" /> : null}
 
       {children}
     </div>

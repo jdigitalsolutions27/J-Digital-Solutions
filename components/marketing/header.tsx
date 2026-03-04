@@ -91,16 +91,20 @@ export function MarketingHeader({ brandName = "J-Digital Solutions" }: { brandNa
       className={`sticky top-0 z-50 border-b backdrop-blur-xl transition-all ${
         isScrolled
           ? "border-blue-300/30 bg-slate-950/92 shadow-[0_14px_38px_-24px_rgba(2,6,23,0.95)]"
-          : "border-white/10 bg-slate-950/72"
+          : "border-white/10 bg-slate-950/68"
       }`}
     >
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/45 to-transparent" />
       <div className="container-xl flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-3 text-white">
+        <Link href="/" className="group flex items-center gap-3 text-white">
           <BrandLogo alt={brandName} width={190} height={56} priority animated imageClassName="h-10 w-auto sm:h-11" />
-          <span className="hidden font-display text-lg font-semibold md:inline">{brandName}</span>
+          <div className="hidden md:block">
+            <span className="block font-display text-lg font-semibold transition group-hover:text-cyan-100">{brandName}</span>
+            <span className="block text-[10px] uppercase tracking-[0.24em] text-slate-400">Premium Digital Systems</span>
+          </div>
         </Link>
 
-        <nav className="hidden items-center gap-5 lg:flex" aria-label="Primary Navigation">
+        <nav className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] lg:flex" aria-label="Primary Navigation">
           {navItems.map((item) => {
             const active = isNavItemActive(item.href);
             return (
@@ -108,9 +112,9 @@ export function MarketingHeader({ brandName = "J-Digital Solutions" }: { brandNa
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`relative rounded-md px-2 py-1.5 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 after:absolute after:-bottom-1 after:left-2 after:h-0.5 after:w-[calc(100%-1rem)] after:origin-left after:rounded-full after:bg-blue-300 after:transition-transform ${
+                className={`relative rounded-full px-3 py-2 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 after:absolute after:bottom-1 after:left-3 after:h-0.5 after:w-[calc(100%-1.5rem)] after:origin-left after:rounded-full after:bg-blue-300 after:transition-transform ${
                   active
-                    ? "bg-white/[0.06] font-medium text-white after:scale-x-100"
+                    ? "bg-white/[0.08] font-medium text-white shadow-[0_10px_30px_-18px_rgba(56,189,248,0.5)] after:scale-x-100"
                     : "text-slate-200 after:scale-x-0 hover:bg-white/[0.04] hover:text-white hover:after:scale-x-100"
                 }`}
               >
@@ -157,7 +161,7 @@ export function MarketingHeader({ brandName = "J-Digital Solutions" }: { brandNa
             ref={mobileMenuRef}
             role="dialog"
             aria-modal="true"
-            className="relative max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/10 bg-slate-950/95"
+            className="relative max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/10 bg-[linear-gradient(180deg,rgba(2,6,23,0.96),rgba(4,16,31,0.98))]"
           >
             <div className="container-xl space-y-1 py-3">
               {navItems.map((item) => {
